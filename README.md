@@ -33,7 +33,7 @@ CORE INCLUDED
 - jQuery NiceScroll v3.5.4 (By InuYaksa)
 - And more in future...
 
-#### Only 79 Kb
+#### Only 61 Kb
 Despite the fact that inside the core gathered much of its weight is less than the weight alone jQuery.min.
 
 
@@ -43,7 +43,6 @@ You can enable or disable any core element (even jQuery).
 
 #### Problems
 - Disabling any element, the core will not weigh less. This problem will be solved in the future.
-- Not display on smartphones, due to lack of support js and css3 animation in some browsers.
 - Core size is still large (in future versions it will dynamically change depending on the user settings)
 
 
@@ -55,12 +54,8 @@ On other CMS still pass the tests ...
 
 To install the core, write the inside of your head
 ```html
-<script type="text/javascript" charset="windows-1252" src="path to core/!AWITCore/AWIT.Core.bsmin.js"</script>
-```
-
-And add to the tag body style="display:none"
-```html
-<body style="display:none">
+<script type="text/javascript" charset="windows-1252" src="path to core/!AWITCore/AWIT.Core.config?1.js"</script>
+<script type="text/javascript" charset="windows-1252" src="path to core/!AWITCore/AWIT.Core.v4.0.bsmin.js"</script>
 ```
 
 
@@ -70,99 +65,87 @@ OPTIONS
 #### General
 
 ```js
-true // enable
-false // disable
 
-jQuery
-// connects jQuery
-jQueryCookie
-// connects jQueryCookie
-generalStyles
-// basic settings and styles for page
-imgAfterLoad
-// loading images after loading the whole page and content
-absoluteCenter
-// everything absolute centering in body tag
+	true // enable
+	false // disable
+
+	var AWITCore = {
+//		GENERAL
+		generalStyles: true, // basic settings and styles for page
+		imgAfterLoad: true, // loading images after loading the whole page and content
+		BodyAbsoluteCenter: true, // everything absolute centering in body tag
+		BodyAbsoluteCenterFix: true,
+		
+//		FONT
+		FontAppend: true,
+			FontAppendTags: "*", // if * font append to full page
+			FontLoad: "OpenSans-Light.ttf",
+			FontName: "Open Sans",
+			FontWeight: "normal",
+			FontStyle: "normal",
+		
+//		BACKGROUND
+		background: true,
+			back_image: "background", // if 'background' core use 'background.jpg' before the core.
+//			back_image: "http://bwalles.com/wp-content/uploads/2013/05/Big-Bang-Near-Planet-In-Space-Widescreen-Wallpaper.jpg", // Url img exemple
+			back_image_low: "background_low", // if 'background_low' core use 'background_low.jpg' before the core.
+			
+			back_size: "cover",
+			back_repeat: "no-repeat",
+			back_position: "center center",
+			back_animation: "fadeIn", // 'none', 'fadeIn',
+		
+//		SECURE (experimental)
+		Secure: false,
+		extraSecure: false, // Over time, the code clears. All script, iframe remove from page source.
+		codeOrder: true,
+		pageSelectionLock: false,
+		mouseLock: false,
+		
+//		SITE (or page) NOT WORK ON:
+		desktop: false,
+		tablet: false,
+		smartphone: false,
+		deviceAlertText: "",
+		
+		tablet_landscape: false,
+		tablet_portrait: false,
+		smartphone_landscape: false,
+		smartphone_portrait: false,
+		deviceAlertOrientationText: "",
+	};
+	var AWITCoreScrollbar = {
+//		SCROLLBAR
+		Scrollator: true,
+			ScrollToTags: 'body, .scroll', // enter tags separated by commas // do not enter html tag
+			scrollbarOnBodyPosition: "top: 0px; right: 0px; bottom: 0px;",
+			minHandleHeightPercent: '20',
+			refreshTime: '1', // in ms
+			zIndex: '999',
+			autoHide: false,
+			autoHideDelay: '3500', // in ms
+		
+			// Style
+			scrollbarColor: "rgba(255, 255, 255, 0.9)",
+			scrollbarWidth: "14px",
+			scrollbarBorder: "5px solid rgba(0, 0, 0, 0);",
+			scrollbarBorderRadius: "16px",
+			scrollbarShadow: "0 0 5px rgba(0,0,0,0.3)",
+			scrollbarCustomStyle: "",
+		
+//		SCROLL TO TOP
+		ScrollTop: true,
+			ScrollTop_color: "rgba(255,255,255,0.9)",
+			ScrollTop_hovercolor: "rgba(255,255,255,1)",
+			ScrollTop_position: "bottom: 35px; right: 50px;",
+			ScrollTop_speed: '350', // in ms
+	};
+	// more options for scrollbar read on http://areaaperta.com/nicescroll/ - Configuration parameters
+	
 ```
-
-#### Background
-
-```js
-back_hd
-// connection background image (in a good or HD quality) to the site,
-// put "background.jpg" beside the core
-back_low
-// connection background image (with low quality preview) on the site,
-// put "background_low.jpg" beside the core
-back_position
-// background image position (default centered)
-```
-
-#### Scroll to top (will not always work)
-
-```js
-arrowScrollTop
-// button to scroll to the top of the page
-arrow_color
-// change color
-arrow_hovercolor
-// change hover color
-```
-
-#### Secure (experimental)
-
-```js
-codeOrder
-// organization and code cleanup, when the page opens
-scriptRemove
-// removes all <script> tags of page, when the page opens
-iframeRemove
-// removes all tags <iframe> from the page, when the page opens
-mouseLock
-// blocks the right mouse button
-```
-
-#### Nicescroll
-
-```js
-jQueryNiceScroll
-// by far the best scroll bar for the site,
-active
-// enable or disable
-tag
-// main tag for the entire page to be assigned to the scroll,
-// use "body" or "html"
-zindex
-// change z-index for scrollbar (default: 9999)
-scrollspeed
-// scrolling speed (default: 60)
-cursorcolor
-// change cursor color
-cursorwidth
-// cursor width in pixel
-cursorborder
-// css definition for cursor border
-cursorborderradius
-// border radius in pixel for cursor
-autohidemode
-// auto-hide the cursor
-spacebarenabled
-// enable page down scrolling when space bar has pressed (default: false)
-smoothscroll
-// scroll with ease movement (default: true)
-```
-And many more options ... read on the site [http://areaaperta.com/nicescroll/](http://areaaperta.com/nicescroll/) - Configuration parameters
 
 #### CSS Clases (put in yor html code)
 
-```css
-.dn
-/* hide block using display: none; */
-.db*
-/* display block using display: block; */
-.scrollTo
-/* activation of the scroll to the desired id, example: */
-```
 ```html
 <a class="scrollTo" href="#link">Link</a>
 <div id="link"></div>
