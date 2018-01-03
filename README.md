@@ -42,7 +42,6 @@ Inside the core, there are custom settings.
 You can enable or disable any core element (even jQuery).
 
 
-
 INSTALLATION
 -------------------------
 

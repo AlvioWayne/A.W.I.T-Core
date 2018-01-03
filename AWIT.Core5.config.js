@@ -2,8 +2,8 @@
 
 
 
-	Version 5 (5.16.0 Monolith | 26.12.2017)
-	By Alvio Wayne 2017
+	Version 5 (5.18.0 Monolith | 03.01.2018)
+	By Alvio Wayne 2018
 
 
 
@@ -22,8 +22,8 @@
 //	USER CONFIG
 //	true - on, false - off,
 	var AWITCoreConfig = {
-		HomeLink: ['http://localhost/GE/Fase_III_L/', 'http://localhost/GE/Fase_III_L/index.html'],
-//		HomeLink: ['http://awdevge.kaufi.com.ua/v3m/', 'http://awdevge.kaufi.com.ua/v3m/index.html'],
+		HomeLink: [''],
+		
 		
 		ImgAfterLoad: true,
 		BodyAbsoluteCenter: false,
@@ -35,10 +35,10 @@
 		WowNew: true,
 		
 //		BACKGROUND
-		FullPageBackground: true,
+		FullPageBackground: false,
 			background_HD: "background.jpg", // if 'background' core use 'background.jpg' before the core.
 			background_low: "background_low.jpg", // if 'background_low' core use 'background_low.jpg' before the core.
-			background_overlay: true,
+			background_overlay: false,
 				back_size: "cover",
 				back_repeat: "no-repeat",
 				back_position: "center center",
@@ -48,13 +48,10 @@
 //		FONT
 		FontAwesome: false,
 			FA_minCss: false,
-		FontAppend: true,
+		FontAppend: false,
 //			fontAppendTags: ".about, article", // if * font append to all page
 			fontLoad: "OpenSans-Light.ttf",
 			fontName: "Open Sans",
-//			fontFadeIn: false,
-//			fontFadeIn_speed: "500", // in ms
-//			fontFadeIn_delay: "600", // in ms
 		
 //		SITE (or page) NOT WORK ON:
 		desktopBlock: false,
@@ -63,9 +60,9 @@
 			deviceBlockText: "For now,<br>site (or page) temporary<br>not supported on this device.",
 		
 //		EXPERIMENTAL
+		StyleVer: '1', // CacheClean
 		Secure: false,
 		ShowFPS: false,
-//		pageInitDelay: '', // in ms
 	};
 	var AWITCoreScrollbar = {
 //		SCROLLBAR
@@ -96,7 +93,7 @@
 			ScrollTop_zIndex: '9997',
 	};
 	var RCMenuBeta = {
-		Active: true,
+		Active: false,
 		RightClickMenu: false,
 		contextMenuOnMouseHold: false,
 		
