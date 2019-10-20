@@ -29,7 +29,7 @@ CORE INCLUDED
 - And more...
 
 
-#### Only 80 Kb (bsmin version)
+#### Only 95 Kb (bsmin version)
 Despite the fact that inside the core gathered much of its weight is less than the weight alone jQuery.min.
 
 

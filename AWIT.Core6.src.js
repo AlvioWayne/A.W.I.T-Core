@@ -1,5 +1,23 @@
-// console.log();
-var AWITCoreVer = "6 Monolith (build 3.4.1 | _2019_04_17_20_26_17_19)";
+/*!  A.W.I.T Core 6 Monolith
+	
+	Technology to simplify web development and website display.
+	General styles & scripts for page, site load acceleration, and more...
+	
+	A.W.I.T = Alvio Wayne Innovations Technologies
+	(c) Alvio Wayne
+	https://alviowayne.github.io/
+	https://github.com/AlvioWayne/
+	The MIT License (MIT)
+	
+	Compressed with Bananascript.com
+	http://www.bananascript.com/
+	Internets most efficient javascript compression tool.
+	
+*/
+
+
+
+var AWITCoreVer = "6 Monolith (build 5.6.7 | _2019_10_20_20_11_19_91)";
 var AWITCoreInfo = '';
 function ACInfo(func, param) {
 	
@@ -100,10 +118,15 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		Init: true,
 		UP: false,
 		
+		waitDOM: true,
+//		waitStyles: true,
+		
+//		waitPageReady: true,
 		BaseStyle: true,
 //		CustomStylesScripts: ['pages.css'],
 		CustomStylesScripts: [],
 		StyleVer: '',
+		
 		WowNew: true,
 		ImgAfterLoad: true,
 		BodyAbsoluteCenter: false,
@@ -140,15 +163,13 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		
 	};
 	$.extend(AC_self, useroptions);
+	
+	
+	
+	
+	
+	// INIT
 	if (!AC_self.Init) {return false;}
-	
-	
-	
-//!	ACPageReady _2018_11_24_12_11_41_31
-	var ACPCount = 0;
-	var ACPCountReady = 0;
-	if (AC_self.fl_pageShowWhait) { ACPCount++; }
-	if (AC_self.BaseStyle) { ACPCount++; }
 	
 	function AWITCorePrepare() {
 		
@@ -156,40 +177,59 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			$('head').append('<style id="AWITCorePrepare">html.AWITCorePrepare * {animation-name:none!important;animation:none!important;}html.AWITCorePrepare body * {visibility:hidden!important;overflow:hidden!important;}html.AWITCorePrepare body, html.AWITCorePrepare body * {pointer-events:none!important;}</style>');
 		}
 		$('html').addClass('AWITCorePrepare');
+		$('head').append('<style type="text/css" id="AWITCoreH"></style>');
 		
 	}
-	function ACPageReady(state) {
+	AWITCorePrepare();
+	
+	{/*! ACPageReady
+			
+			Last upadate _2019_08_02_23_27_45_39
+			(c) Alvio Wayne
+			
+		*/
 		
-		if (state !== 'init') {
-			$('head').append('<style id="AWITCorePrepare">html.AWITCorePrepare * {animation-name:none!important;animation:none!important;}html.AWITCorePrepare body * {visibility:hidden!important;overflow:hidden!important;}html.AWITCorePrepare body, html.AWITCorePrepare body * {pointer-events:none!important;}</style>');
+		var ACPCount = 0;
+		var ACPCountReady = 0;
+		if (AC_self.FontLoad !== '' && AC_self.fl_pageShowWhait) { ACPCount++; }
+		if (AC_self.BaseStyle || AC_self.CustomStylesScripts.length) { ACPCount++; }
+		
+		function AWITCorePrepare() {
+			
+			if (!$('head #AWITCorePrepare').length) {
+				$('head').append('<style id="AWITCorePrepare">html.AWITCorePrepare * {animation-name:none!important;animation:none!important;}html.AWITCorePrepare body * {visibility:hidden!important;overflow:hidden!important;}html.AWITCorePrepare body, html.AWITCorePrepare body * {pointer-events:none!important;}</style>');
+			}
 			$('html').addClass('AWITCorePrepare');
 			
-//			console.log('ACPCount ' + ACPCount);
-			ACPCountReady++
-//			console.log('ACPCountReady ' + ACPCountReady);
 		}
-		if (ACPCount == ACPCountReady) {
+		function ACPageReady(state) {
 			
-			setTimeout(function() {
-				$("html").addClass('pageReady');
-				$("html").removeClass('AWITCorePrepare');
-				$(document).trigger("pageReady");
-			}, 100);
+			if (state !== 'init') {
+	//			console.log('ACPCount ' + ACPCount);
+				ACPCountReady++
+	//			console.log('ACPCountReady ' + ACPCountReady);
+			}
 			
-		}
-/* 		if (!AC_self.Init) {
-			$("html").removeClass('AWITCorePrepare');
-			return false;
-		} */
+//			console.log(ACPCount);
+//			console.log(ACPCountReady);
+			
+			if (ACPCount == ACPCountReady) {
+				
+				setTimeout(function() {
+					$("html").addClass('pageReady');
+					$("html").removeClass('AWITCorePrepare');
+					$(document).trigger("pageReady");
+				}, 100);
+				
+			}
+			
+		};
+		AWITCorePrepare();
+		ACPageReady('init');
 		
-	};
-	AWITCorePrepare();
-	ACPageReady('init');
-	
-	function AWITCoreTags() { // Tags
-		$('head').append('<style type="text/css" id="AWITCoreH"></style>');
-		$('body').append('<div id="awitcore"></div>');
-	};
+		
+		
+	}
 	
 	
 	
@@ -548,168 +588,172 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		
 	*/});
 	
-	$.fn.viewportChecker = function(useroptions){
-			// Define options and extend with user
-			var options = {
-				classToAdd: 'visible',
-				classToRemove : 'invisible',
-				classToAddForFullView : 'full-visible',
-				removeClassAfterAnimation: false,
-				offset: 100,
-				repeat: false,
-				invertBottomOffset: true,
-				callbackFunction: function(elem, action){},
-				scrollHorizontal: false,
-				scrollBox: window
-			};
-			$.extend(options, useroptions);
+    $.fn.viewportChecker = function(useroptions){
+        // Define options and extend with user
+        var options = {
+            classToAdd: 'visible',
+            classToRemove : 'invisible',
+            classToAddForFullView : 'full-visible',
+            removeClassAfterAnimation: false,
+            offset: 100,
+            repeat: false,
+            invertBottomOffset: true,
+            callbackFunction: function(elem, action){},
+            scrollHorizontal: false,
+            scrollBox: window
+        };
+        $.extend(options, useroptions);
 
-			// Cache the given element and height of the browser
-			var $elem = this,
-				boxSize = {height: $(options.scrollBox).height(), width: $(options.scrollBox).width()};
+        // Cache the given element and height of the browser
+        var $elem = this,
+            boxSize = {height: $(options.scrollBox).height(), width: $(options.scrollBox).width()};
 
-			/*
-			 * Main method that checks the elements and adds or removes the class(es)
-			 */
-			this.checkElements = function(){
-				var viewportStart, viewportEnd;
+        /*
+         * Main method that checks the elements and adds or removes the class(es)
+         */
+        this.checkElements = function(){
+            var viewportStart, viewportEnd;
 
-				// Set some vars to check with
-				if (!options.scrollHorizontal){
-					viewportStart = Math.max(
-						$('html').scrollTop(),
-						$('body').scrollTop(),
-						$(window).scrollTop()
-					);
-					viewportEnd = (viewportStart + boxSize.height);
-				}
-				else{
-					viewportStart = Math.max(
-						$('html').scrollLeft(),
-						$('body').scrollLeft(),
-						$(window).scrollLeft()
-					);
-					viewportEnd = (viewportStart + boxSize.width);
-				}
+            // Set some vars to check with
+            if (!options.scrollHorizontal){
+                viewportStart = Math.max(
+                    $('html').scrollTop(),
+                    $('body').scrollTop(),
+                    $(window).scrollTop()
+                );
+                viewportEnd = (viewportStart + boxSize.height);
+            }
+            else{
+                viewportStart = Math.max(
+                    $('html').scrollLeft(),
+                    $('body').scrollLeft(),
+                    $(window).scrollLeft()
+                );
+                viewportEnd = (viewportStart + boxSize.width);
+            }
 
-				// Loop through all given dom elements
-				$elem.each(function(){
-					var $obj = $(this),
-						objOptions = {},
-						attrOptions = {};
+            // Loop through all given dom elements
+            $elem.each(function(){
+                var $obj = $(this),
+                    objOptions = {},
+                    attrOptions = {};
 
-					//  Get any individual attribution data
-					if ($obj.data('vp-add-class'))
-						attrOptions.classToAdd = $obj.data('vp-add-class');
-					if ($obj.data('vp-remove-class'))
-						attrOptions.classToRemove = $obj.data('vp-remove-class');
-					if ($obj.data('vp-add-class-full-view'))
-						attrOptions.classToAddForFullView = $obj.data('vp-add-class-full-view');
-					if ($obj.data('vp-keep-add-class'))
-						attrOptions.removeClassAfterAnimation = $obj.data('vp-remove-after-animation');
-					if ($obj.data('vp-offset'))
-						attrOptions.offset = $obj.data('vp-offset');
-					if ($obj.data('vp-repeat'))
-						attrOptions.repeat = $obj.data('vp-repeat');
-					if ($obj.data('vp-scrollHorizontal'))
-						attrOptions.scrollHorizontal = $obj.data('vp-scrollHorizontal');
-					if ($obj.data('vp-invertBottomOffset'))
-						attrOptions.scrollHorizontal = $obj.data('vp-invertBottomOffset');
+                //  Get any individual attribution data
+                if ($obj.data('vp-add-class'))
+                    attrOptions.classToAdd = $obj.data('vp-add-class');
+                if ($obj.data('vp-remove-class'))
+                    attrOptions.classToRemove = $obj.data('vp-remove-class');
+                if ($obj.data('vp-add-class-full-view'))
+                    attrOptions.classToAddForFullView = $obj.data('vp-add-class-full-view');
+                if ($obj.data('vp-keep-add-class'))
+                    attrOptions.removeClassAfterAnimation = $obj.data('vp-remove-after-animation');
+                if ($obj.data('vp-offset'))
+                    attrOptions.offset = $obj.data('vp-offset');
+                if ($obj.data('vp-repeat'))
+                    attrOptions.repeat = $obj.data('vp-repeat');
+                if ($obj.data('vp-scrollHorizontal'))
+                    attrOptions.scrollHorizontal = $obj.data('vp-scrollHorizontal');
+                if ($obj.data('vp-invertBottomOffset'))
+                    attrOptions.scrollHorizontal = $obj.data('vp-invertBottomOffset');
 
-					// Extend objOptions with data attributes and default options
-					$.extend(objOptions, options);
-					$.extend(objOptions, attrOptions);
+                // Extend objOptions with data attributes and default options
+                $.extend(objOptions, options);
+                $.extend(objOptions, attrOptions);
 
-					// If class already exists; quit
-					if ($obj.data('vp-animated') && !objOptions.repeat){
-						return;
-					}
+                // If class already exists; quit
+                if ($obj.data('vp-animated') && !objOptions.repeat){
+                    return;
+                }
 
-					// Check if the offset is percentage based
-					if (String(objOptions.offset).indexOf("%") > 0)
-						objOptions.offset = (parseInt(objOptions.offset) / 100) * boxSize.height;
+                // Check if the offset is percentage based
+                if (String(objOptions.offset).indexOf("%") > 0)
+                    objOptions.offset = (parseInt(objOptions.offset) / 100) * boxSize.height;
 
-					// Get the raw start and end positions
-					var rawStart = (!objOptions.scrollHorizontal) ? $obj.offset().top : $obj.offset().left,
-						rawEnd = (!objOptions.scrollHorizontal) ? rawStart + $obj.height() : rawStart + $obj.width();
+                // Get the raw start and end positions
+                var rawStart = (!objOptions.scrollHorizontal) ? $obj.offset().top : $obj.offset().left,
+                    rawEnd = (!objOptions.scrollHorizontal) ? rawStart + $obj.height() : rawStart + $obj.width();
 
-					// Add the defined offset
-					var elemStart = Math.round( rawStart ) + objOptions.offset,
-						elemEnd = (!objOptions.scrollHorizontal) ? elemStart + $obj.height() : elemStart + $obj.width();
+                // Add the defined offset
+                var elemStart = Math.round( rawStart ) + objOptions.offset,
+                    elemEnd = (!objOptions.scrollHorizontal) ? elemStart + $obj.height() : elemStart + $obj.width();
 
-					if (objOptions.invertBottomOffset)
-						elemEnd -= (objOptions.offset * 2);
+                if (objOptions.invertBottomOffset)
+                    elemEnd -= (objOptions.offset * 2);
 
-					// Add class if in viewport
-					if ((elemStart < viewportEnd) && (elemEnd > viewportStart)){
+                // Add class if in viewport
+                if ((elemStart < viewportEnd) && (elemEnd > viewportStart)){
 
-						// Remove class
-						$obj.removeClass(objOptions.classToRemove);
-						$obj.addClass(objOptions.classToAdd);
+                    // Remove class
+                    $obj.removeClass(objOptions.classToRemove);
+                    $obj.addClass(objOptions.classToAdd);
 
-						// Do the callback function. Callback wil send the jQuery object as parameter
-						objOptions.callbackFunction($obj, "add");
+                    // Do the callback function. Callback wil send the jQuery object as parameter
+                    objOptions.callbackFunction($obj, "add");
 
-						// Check if full element is in view
-						if (rawEnd <= viewportEnd && rawStart >= viewportStart)
-							$obj.addClass(objOptions.classToAddForFullView);
-						else
-							$obj.removeClass(objOptions.classToAddForFullView);
+                    // Check if full element is in view
+                    if (rawEnd <= viewportEnd && rawStart >= viewportStart)
+                        $obj.addClass(objOptions.classToAddForFullView);
+                    else
+                        $obj.removeClass(objOptions.classToAddForFullView);
 
-						// Set element as already animated
-						$obj.data('vp-animated', true);
+                    // Set element as already animated
+                    $obj.data('vp-animated', true);
 
-						if (objOptions.removeClassAfterAnimation) {
-							$obj.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
-								$obj.removeClass(objOptions.classToAdd);
-							});
-						}
+                    if (objOptions.removeClassAfterAnimation) {
+                        $obj.one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+                            $obj.removeClass(objOptions.classToAdd);
+                        });
+                    }
 
-					// Remove class if not in viewport and repeat is true
-					} else if ($obj.hasClass(objOptions.classToAdd) && (objOptions.repeat)){
-						$obj.removeClass(objOptions.classToAdd + " " + objOptions.classToAddForFullView);
+                // Remove class if not in viewport and repeat is true
+                } else if ($obj.hasClass(objOptions.classToAdd) && (objOptions.repeat)){
+                    $obj.removeClass(objOptions.classToAdd + " " + objOptions.classToAddForFullView);
 
-						// Do the callback function.
-						objOptions.callbackFunction($obj, "remove");
+                    // Do the callback function.
+                    objOptions.callbackFunction($obj, "remove");
 
-						// Remove already-animated-flag
-						$obj.data('vp-animated', false);
-					}
-				});
+                    // Remove already-animated-flag
+                    $obj.data('vp-animated', false);
+                }
+            });
 
-			};
+        };
 
-			/**
-			 * Binding the correct event listener is still a tricky thing.
-			 * People have expierenced sloppy scrolling when both scroll and touch
-			 * events are added, but to make sure devices with both scroll and touch
-			 * are handles too we always have to add the window.scroll event
-			 *
-			 * @see  https://github.com/dirkgroenen/jQuery-viewport-checker/issues/25
-			 * @see  https://github.com/dirkgroenen/jQuery-viewport-checker/issues/27
-			 */
+        /**
+         * Binding the correct event listener is still a tricky thing.
+         * People have expierenced sloppy scrolling when both scroll and touch
+         * events are added, but to make sure devices with both scroll and touch
+         * are handles too we always have to add the window.scroll event
+         *
+         * @see  https://github.com/dirkgroenen/jQuery-viewport-checker/issues/25
+         * @see  https://github.com/dirkgroenen/jQuery-viewport-checker/issues/27
+         */
 
-			// Select the correct events
-			if( 'ontouchstart' in window || 'onmsgesturechange' in window ){
-				// Device with touchscreen
-				$(document).bind("touchmove MSPointerMove pointermove", this.checkElements);
-			}
+        // Select the correct events
+        if( 'ontouchstart' in window || 'onmsgesturechange' in window ){
+            // Device with touchscreen
+            $(document).bind("touchmove MSPointerMove pointermove", this.checkElements);
+        }
 
-			// Always load on window load
-			$(options.scrollBox).bind("load scroll", this.checkElements);
+        // Always load on window load
+//		$(options.scrollBox).bind("load scroll", this.checkElements);
+		$(options.scrollBox).on('load pageReady scroll', function(e) { // AW for AWITCore
+			boxSize = {height: $(options.scrollBox).height(), width: $(options.scrollBox).width()};
+			$elem.checkElements();
+		});
+		
+        // On resize change the height var
+        $(window).resize(function(e){
+            boxSize = {height: $(options.scrollBox).height(), width: $(options.scrollBox).width()};
+            $elem.checkElements();
+        });
 
-			// On resize change the height var
-			$(window).resize(function(e){
-				boxSize = {height: $(options.scrollBox).height(), width: $(options.scrollBox).width()};
-				$elem.checkElements();
-			});
+        // trigger inital check if elements already visible
+        this.checkElements();
 
-			// trigger inital check if elements already visible
-			this.checkElements();
-
-			// Default jquery plugin behaviour
-			return this;
-	};
+        // Default jquery plugin behaviour
+        return this;
+    };
 	
 	})(jQuery);
 	{ ACInfo(function() {/*! jQuery Mousewheel 3.1.13
@@ -733,6 +777,18 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	*/});
 	
 	(function(a){function m(){if(!d){d=!0;for(var c in b)a(c).each(function(){var d,e;d=a(this),e=d.data("jqae"),(e.containerWidth!=d.width()||e.containerHeight!=d.height())&&f(d,b[c])});d=!1}}function l(a){b[a]&&(delete b[a],b.length||c&&(window.clearInterval(c),c=undefined))}function k(a,d){b[a]=d,c||(c=window.setInterval(function(){m()},200))}function j(){return this.nodeType===3}function i(b){if(b.contents().length){var c=b.contents(),d=c.eq(c.length-1);if(d.filter(j).length){var e=d.get(0).nodeValue;e=a.trim(e);if(e==""){d.remove();return!0}return!1}while(i(d));if(d.contents().length)return!1;d.remove();return!0}return!1}function h(a){if(a.contents().length){var b=a.contents(),c=b.eq(b.length-1);return c.filter(j).length?c:h(c)}a.append("");var b=a.contents();return b.eq(b.length-1)}function g(b){var c=h(b);if(c.length){var d=c.get(0).nodeValue,e=d.lastIndexOf(" ");e>-1?(d=a.trim(d.substring(0,e)),c.get(0).nodeValue=d):c.get(0).nodeValue="";return!0}return!1}function f(b,c){var d=b.data("jqae");d||(d={});var e=d.wrapperElement;e||(e=b.wrapInner("<div/>").find(">div"),e.css({margin:0,padding:0,border:0}));var f=e.data("jqae");f||(f={});var j=f.originalContent;j?e=f.originalContent.clone(!0).data("jqae",{originalContent:j}).replaceAll(e):e.data("jqae",{originalContent:e.clone(!0)}),b.data("jqae",{wrapperElement:e,containerWidth:b.width(),containerHeight:b.height()});var k=b.height(),l=(parseInt(b.css("padding-top"),10)||0)+(parseInt(b.css("border-top-width"),10)||0)-(e.offset().top-b.offset().top),m=!1,n=e;c.selector&&(n=a(e.find(c.selector).get().reverse())),n.each(function(){var b=a(this),d=b.text(),f=!1;if(e.innerHeight()-b.innerHeight()>k+l)b.remove();else{i(b);if(b.contents().length){m&&(h(b).get(0).nodeValue+=c.ellipsis,m=!1);while(e.innerHeight()>k+l){f=g(b);if(!f){m=!0,b.remove();break}i(b);if(b.contents().length)h(b).get(0).nodeValue+=c.ellipsis;else{m=!0,b.remove();break}}c.setTitle=="onEllipsis"&&f||c.setTitle=="always"?b.attr("title",d):c.setTitle!="never"&&b.removeAttr("title")}}})}var b={},c,d=!1,e={ellipsis:"...",setTitle:"never",live:!1};a.fn.ellipsis=function(b,c){var d,g;d=a(this),typeof b!="string"&&(c=b,b=undefined),g=a.extend({},e,c),g.selector=b,d.each(function(){var b=a(this);f(b,g)}),g.live?k(d.selector,g):l(d.selector);return this}})(jQuery);
+	
+	}
+	{ ACInfo(function() {/*! dragula.js Drag and drop so simple it hurts
+		
+		bevacqua
+		https://github.com/bevacqua/dragula
+		https://bevacqua.github.io/dragula/
+		The MIT License (MIT)
+		
+	*/});
+	
+	!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var n;n="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:this,n.dragula=e()}}(function(){return function e(n,t,r){function o(u,c){if(!t[u]){if(!n[u]){var a="function"==typeof require&&require;if(!c&&a)return a(u,!0);if(i)return i(u,!0);var f=new Error("Cannot find module '"+u+"'");throw f.code="MODULE_NOT_FOUND",f}var l=t[u]={exports:{}};n[u][0].call(l.exports,function(e){var t=n[u][1][e];return o(t?t:e)},l,l.exports,e,n,t,r)}return t[u].exports}for(var i="function"==typeof require&&require,u=0;u<r.length;u++)o(r[u]);return o}({1:[function(e,n,t){"use strict";function r(e){var n=u[e];return n?n.lastIndex=0:u[e]=n=new RegExp(c+e+a,"g"),n}function o(e,n){var t=e.className;t.length?r(n).test(t)||(e.className+=" "+n):e.className=n}function i(e,n){e.className=e.className.replace(r(n)," ").trim()}var u={},c="(?:^|\\s)",a="(?:\\s|$)";n.exports={add:o,rm:i}},{}],2:[function(e,n,t){(function(t){"use strict";function r(e,n){function t(e){return-1!==le.containers.indexOf(e)||fe.isContainer(e)}function r(e){var n=e?"remove":"add";o(S,n,"mousedown",O),o(S,n,"mouseup",L)}function c(e){var n=e?"remove":"add";o(S,n,"mousemove",N)}function m(e){var n=e?"remove":"add";w[n](S,"selectstart",C),w[n](S,"click",C)}function h(){r(!0),L({})}function C(e){ce&&e.preventDefault()}function O(e){ne=e.clientX,te=e.clientY;var n=1!==i(e)||e.metaKey||e.ctrlKey;if(!n){var t=e.target,r=T(t);r&&(ce=r,c(),"mousedown"===e.type&&(p(t)?t.focus():e.preventDefault()))}}function N(e){if(ce){if(0===i(e))return void L({});if(void 0===e.clientX||e.clientX!==ne||void 0===e.clientY||e.clientY!==te){if(fe.ignoreInputTextSelection){var n=y("clientX",e),t=y("clientY",e),r=x.elementFromPoint(n,t);if(p(r))return}var o=ce;c(!0),m(),D(),B(o);var a=u(W);Z=y("pageX",e)-a.left,ee=y("pageY",e)-a.top,E.add(ie||W,"gu-transit"),K(),U(e)}}}function T(e){if(!(le.dragging&&J||t(e))){for(var n=e;v(e)&&t(v(e))===!1;){if(fe.invalid(e,n))return;if(e=v(e),!e)return}var r=v(e);if(r&&!fe.invalid(e,n)){var o=fe.moves(e,r,n,g(e));if(o)return{item:e,source:r}}}}function X(e){return!!T(e)}function Y(e){var n=T(e);n&&B(n)}function B(e){$(e.item,e.source)&&(ie=e.item.cloneNode(!0),le.emit("cloned",ie,e.item,"copy")),Q=e.source,W=e.item,re=oe=g(e.item),le.dragging=!0,le.emit("drag",W,Q)}function P(){return!1}function D(){if(le.dragging){var e=ie||W;M(e,v(e))}}function I(){ce=!1,c(!0),m(!0)}function L(e){if(I(),le.dragging){var n=ie||W,t=y("clientX",e),r=y("clientY",e),o=a(J,t,r),i=q(o,t,r);i&&(ie&&fe.copySortSource||!ie||i!==Q)?M(n,i):fe.removeOnSpill?R():A()}}function M(e,n){var t=v(e);ie&&fe.copySortSource&&n===Q&&t.removeChild(W),k(n)?le.emit("cancel",e,Q,Q):le.emit("drop",e,n,Q,oe),j()}function R(){if(le.dragging){var e=ie||W,n=v(e);n&&n.removeChild(e),le.emit(ie?"cancel":"remove",e,n,Q),j()}}function A(e){if(le.dragging){var n=arguments.length>0?e:fe.revertOnSpill,t=ie||W,r=v(t),o=k(r);o===!1&&n&&(ie?r&&r.removeChild(ie):Q.insertBefore(t,re)),o||n?le.emit("cancel",t,Q,Q):le.emit("drop",t,r,Q,oe),j()}}function j(){var e=ie||W;I(),z(),e&&E.rm(e,"gu-transit"),ue&&clearTimeout(ue),le.dragging=!1,ae&&le.emit("out",e,ae,Q),le.emit("dragend",e),Q=W=ie=re=oe=ue=ae=null}function k(e,n){var t;return t=void 0!==n?n:J?oe:g(ie||W),e===Q&&t===re}function q(e,n,r){function o(){var o=t(i);if(o===!1)return!1;var u=H(i,e),c=V(i,u,n,r),a=k(i,c);return a?!0:fe.accepts(W,i,Q,c)}for(var i=e;i&&!o();)i=v(i);return i}function U(e){function n(e){le.emit(e,f,ae,Q)}function t(){s&&n("over")}function r(){ae&&n("out")}if(J){e.preventDefault();var o=y("clientX",e),i=y("clientY",e),u=o-Z,c=i-ee;J.style.left=u+"px",J.style.top=c+"px";var f=ie||W,l=a(J,o,i),d=q(l,o,i),s=null!==d&&d!==ae;(s||null===d)&&(r(),ae=d,t());var p=v(f);if(d===Q&&ie&&!fe.copySortSource)return void(p&&p.removeChild(f));var m,h=H(d,l);if(null!==h)m=V(d,h,o,i);else{if(fe.revertOnSpill!==!0||ie)return void(ie&&p&&p.removeChild(f));m=re,d=Q}(null===m&&s||m!==f&&m!==g(f))&&(oe=m,d.insertBefore(f,m),le.emit("shadow",f,d,Q))}}function _(e){E.rm(e,"gu-hide")}function F(e){le.dragging&&E.add(e,"gu-hide")}function K(){if(!J){var e=W.getBoundingClientRect();J=W.cloneNode(!0),J.style.width=d(e)+"px",J.style.height=s(e)+"px",E.rm(J,"gu-transit"),E.add(J,"gu-mirror"),fe.mirrorContainer.appendChild(J),o(S,"add","mousemove",U),E.add(fe.mirrorContainer,"gu-unselectable"),le.emit("cloned",J,W,"mirror")}}function z(){J&&(E.rm(fe.mirrorContainer,"gu-unselectable"),o(S,"remove","mousemove",U),v(J).removeChild(J),J=null)}function H(e,n){for(var t=n;t!==e&&v(t)!==e;)t=v(t);return t===S?null:t}function V(e,n,t,r){function o(){var n,o,i,u=e.children.length;for(n=0;u>n;n++){if(o=e.children[n],i=o.getBoundingClientRect(),c&&i.left+i.width/2>t)return o;if(!c&&i.top+i.height/2>r)return o}return null}function i(){var e=n.getBoundingClientRect();return u(c?t>e.left+d(e)/2:r>e.top+s(e)/2)}function u(e){return e?g(n):n}var c="horizontal"===fe.direction,a=n!==e?i():o();return a}function $(e,n){return"boolean"==typeof fe.copy?fe.copy:fe.copy(e,n)}var G=arguments.length;1===G&&Array.isArray(e)===!1&&(n=e,e=[]);var J,Q,W,Z,ee,ne,te,re,oe,ie,ue,ce,ae=null,fe=n||{};void 0===fe.moves&&(fe.moves=l),void 0===fe.accepts&&(fe.accepts=l),void 0===fe.invalid&&(fe.invalid=P),void 0===fe.containers&&(fe.containers=e||[]),void 0===fe.isContainer&&(fe.isContainer=f),void 0===fe.copy&&(fe.copy=!1),void 0===fe.copySortSource&&(fe.copySortSource=!1),void 0===fe.revertOnSpill&&(fe.revertOnSpill=!1),void 0===fe.removeOnSpill&&(fe.removeOnSpill=!1),void 0===fe.direction&&(fe.direction="vertical"),void 0===fe.ignoreInputTextSelection&&(fe.ignoreInputTextSelection=!0),void 0===fe.mirrorContainer&&(fe.mirrorContainer=x.body);var le=b({containers:fe.containers,start:Y,end:D,cancel:A,remove:R,destroy:h,canMove:X,dragging:!1});return fe.removeOnSpill===!0&&le.on("over",_).on("out",F),r(),le}function o(e,n,r,o){var i={mouseup:"touchend",mousedown:"touchstart",mousemove:"touchmove"},u={mouseup:"pointerup",mousedown:"pointerdown",mousemove:"pointermove"},c={mouseup:"MSPointerUp",mousedown:"MSPointerDown",mousemove:"MSPointerMove"};t.navigator.pointerEnabled?w[n](e,u[r],o):t.navigator.msPointerEnabled?w[n](e,c[r],o):(w[n](e,i[r],o),w[n](e,r,o))}function i(e){if(void 0!==e.touches)return e.touches.length;if(void 0!==e.which&&0!==e.which)return e.which;if(void 0!==e.buttons)return e.buttons;var n=e.button;return void 0!==n?1&n?1:2&n?3:4&n?2:0:void 0}function u(e){var n=e.getBoundingClientRect();return{left:n.left+c("scrollLeft","pageXOffset"),top:n.top+c("scrollTop","pageYOffset")}}function c(e,n){return"undefined"!=typeof t[n]?t[n]:S.clientHeight?S[e]:x.body[e]}function a(e,n,t){var r,o=e||{},i=o.className;return o.className+=" gu-hide",r=x.elementFromPoint(n,t),o.className=i,r}function f(){return!1}function l(){return!0}function d(e){return e.width||e.right-e.left}function s(e){return e.height||e.bottom-e.top}function v(e){return e.parentNode===x?null:e.parentNode}function p(e){return"INPUT"===e.tagName||"TEXTAREA"===e.tagName||"SELECT"===e.tagName||m(e)}function m(e){return e?"false"===e.contentEditable?!1:"true"===e.contentEditable?!0:m(v(e)):!1}function g(e){function n(){var n=e;do n=n.nextSibling;while(n&&1!==n.nodeType);return n}return e.nextElementSibling||n()}function h(e){return e.targetTouches&&e.targetTouches.length?e.targetTouches[0]:e.changedTouches&&e.changedTouches.length?e.changedTouches[0]:e}function y(e,n){var t=h(n),r={pageX:"clientX",pageY:"clientY"};return e in r&&!(e in t)&&r[e]in t&&(e=r[e]),t[e]}var b=e("contra/emitter"),w=e("crossvent"),E=e("./classes"),x=document,S=x.documentElement;n.exports=r}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./classes":1,"contra/emitter":5,crossvent:6}],3:[function(e,n,t){n.exports=function(e,n){return Array.prototype.slice.call(e,n)}},{}],4:[function(e,n,t){"use strict";var r=e("ticky");n.exports=function(e,n,t){e&&r(function(){e.apply(t||null,n||[])})}},{ticky:9}],5:[function(e,n,t){"use strict";var r=e("atoa"),o=e("./debounce");n.exports=function(e,n){var t=n||{},i={};return void 0===e&&(e={}),e.on=function(n,t){return i[n]?i[n].push(t):i[n]=[t],e},e.once=function(n,t){return t._once=!0,e.on(n,t),e},e.off=function(n,t){var r=arguments.length;if(1===r)delete i[n];else if(0===r)i={};else{var o=i[n];if(!o)return e;o.splice(o.indexOf(t),1)}return e},e.emit=function(){var n=r(arguments);return e.emitterSnapshot(n.shift()).apply(this,n)},e.emitterSnapshot=function(n){var u=(i[n]||[]).slice(0);return function(){var i=r(arguments),c=this||e;if("error"===n&&t["throws"]!==!1&&!u.length)throw 1===i.length?i[0]:i;return u.forEach(function(r){t.async?o(r,i,c):r.apply(c,i),r._once&&e.off(n,r)}),e}},e}},{"./debounce":4,atoa:3}],6:[function(e,n,t){(function(t){"use strict";function r(e,n,t,r){return e.addEventListener(n,t,r)}function o(e,n,t){return e.attachEvent("on"+n,f(e,n,t))}function i(e,n,t,r){return e.removeEventListener(n,t,r)}function u(e,n,t){var r=l(e,n,t);return r?e.detachEvent("on"+n,r):void 0}function c(e,n,t){function r(){var e;return p.createEvent?(e=p.createEvent("Event"),e.initEvent(n,!0,!0)):p.createEventObject&&(e=p.createEventObject()),e}function o(){return new s(n,{detail:t})}var i=-1===v.indexOf(n)?o():r();e.dispatchEvent?e.dispatchEvent(i):e.fireEvent("on"+n,i)}function a(e,n,r){return function(n){var o=n||t.event;o.target=o.target||o.srcElement,o.preventDefault=o.preventDefault||function(){o.returnValue=!1},o.stopPropagation=o.stopPropagation||function(){o.cancelBubble=!0},o.which=o.which||o.keyCode,r.call(e,o)}}function f(e,n,t){var r=l(e,n,t)||a(e,n,t);return h.push({wrapper:r,element:e,type:n,fn:t}),r}function l(e,n,t){var r=d(e,n,t);if(r){var o=h[r].wrapper;return h.splice(r,1),o}}function d(e,n,t){var r,o;for(r=0;r<h.length;r++)if(o=h[r],o.element===e&&o.type===n&&o.fn===t)return r}var s=e("custom-event"),v=e("./eventmap"),p=t.document,m=r,g=i,h=[];t.addEventListener||(m=o,g=u),n.exports={add:m,remove:g,fabricate:c}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{"./eventmap":7,"custom-event":8}],7:[function(e,n,t){(function(e){"use strict";var t=[],r="",o=/^on/;for(r in e)o.test(r)&&t.push(r.slice(2));n.exports=t}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],8:[function(e,n,t){(function(e){function t(){try{var e=new r("cat",{detail:{foo:"bar"}});return"cat"===e.type&&"bar"===e.detail.foo}catch(n){}return!1}var r=e.CustomEvent;n.exports=t()?r:"function"==typeof document.createEvent?function(e,n){var t=document.createEvent("CustomEvent");return n?t.initCustomEvent(e,n.bubbles,n.cancelable,n.detail):t.initCustomEvent(e,!1,!1,void 0),t}:function(e,n){var t=document.createEventObject();return t.type=e,n?(t.bubbles=Boolean(n.bubbles),t.cancelable=Boolean(n.cancelable),t.detail=n.detail):(t.bubbles=!1,t.cancelable=!1,t.detail=void 0),t}}).call(this,"undefined"!=typeof global?global:"undefined"!=typeof self?self:"undefined"!=typeof window?window:{})},{}],9:[function(e,n,t){var r,o="function"==typeof setImmediate;r=o?function(e){setImmediate(e)}:function(e){setTimeout(e,0)},n.exports=r},{}]},{},[2])(2)});
 	
 	}
 	
@@ -810,24 +866,27 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		link.type = "text/css";
 		link.href = file;
 		_this.head.appendChild(link);
+//		console.log(link);
+//		console.log(file.length);
 	  };
 	  _this.loadScript = function(i) {
 		var script = document.createElement('script');
 		script.type = 'text/javascript';
 		script.src = _this.js[i];
-		var loadNextScript = function() { 
+		var loadNextScript = function() {
 		  if (++i < _this.js.length) _this.loadScript(i);  
 		  else _this.after();  
-		};  
+		};
 		script.onload = function() { loadNextScript() };
 		_this.head.appendChild(script);
-	  }  
-	  for (var i=0;i<_this.files.length;i++) {  
+	  }
+	  for (var i=0;i<_this.files.length;i++) {
 		if (/\.js$|\.js\?/.test(_this.files[i])) _this.js.push(_this.files[i])
 		if (/\.css$|\.css\?/.test(_this.files[i])) _this.loadStyle(_this.files[i])
 	  }
-	  if (_this.js.length>0) _this.loadScript(0);  
+	  if (_this.js.length>0) _this.loadScript(0);
 	  else _this.after();
+	  
 	};
 	(function( w, $ ) { ACInfo(function() {/*! jQuery-FontSpy.js v3.0.0
 		
@@ -838,6 +897,8 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		http://opensource.org/licenses/mit-license.php
 		
 		Date: 02/11/2015
+		
+		AW modify _2019_10_15_18_07_01_83
 		
 	*/});
 	
@@ -857,7 +918,14 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			success: function() {},
 			failure: function() {},
 			testFont: 'Courier New',
-			testString: 'QW@HhsXJ',
+//			testString: 'QW@HhsXJ',
+			testString: `
+				@EnРу
+				<div style="font-weight: 400;">@EnРу</div>
+				<div style="font-weight: 500;">@EnРу</div>
+				<div style="font-weight: 600;">@EnРу</div>
+				<div style="font-weight: 700;">@EnРу</div>
+			`,
 			glyphs: '',
 			delay: 50,
 			timeOut: 1000,
@@ -1335,6 +1403,528 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	}));
 	
 	}
+	{ ACInfo(function() {/*! jQuery.scrollTo
+		
+		Copyright (c) 2007 Ariel Flesler - aflesler ○ gmail • com | https://github.com/flesler
+		Licensed under MIT
+		https://github.com/flesler/jquery.scrollTo
+		@projectDescription Lightweight, cross-browser and highly customizable animated scrolling with jQuery
+		@author Ariel Flesler
+		@version 2.1.2
+		
+	*/});
+	
+(function(factory) {
+	'use strict';
+	if (typeof define === 'function' && define.amd) {
+		// AMD
+		define(['jquery'], factory);
+	} else if (typeof module !== 'undefined' && module.exports) {
+		// CommonJS
+		module.exports = factory(require('jquery'));
+	} else {
+		// Global
+		factory(jQuery);
+	}
+})(function($) {
+	'use strict';
+
+	var $scrollTo = $.scrollTo = function(target, duration, settings) {
+		return $(window).scrollTo(target, duration, settings);
+	};
+
+	$scrollTo.defaults = {
+		axis:'xy',
+		duration: 0,
+		limit:true
+	};
+
+	function isWin(elem) {
+		return !elem.nodeName ||
+			$.inArray(elem.nodeName.toLowerCase(), ['iframe','#document','html','body']) !== -1;
+	}
+
+	$.fn.scrollTo = function(target, duration, settings) {
+		if (typeof duration === 'object') {
+			settings = duration;
+			duration = 0;
+		}
+		if (typeof settings === 'function') {
+			settings = { onAfter:settings };
+		}
+		if (target === 'max') {
+			target = 9e9;
+		}
+
+		settings = $.extend({}, $scrollTo.defaults, settings);
+		// Speed is still recognized for backwards compatibility
+		duration = duration || settings.duration;
+		// Make sure the settings are given right
+		var queue = settings.queue && settings.axis.length > 1;
+		if (queue) {
+			// Let's keep the overall duration
+			duration /= 2;
+		}
+		settings.offset = both(settings.offset);
+		settings.over = both(settings.over);
+
+		return this.each(function() {
+			// Null target yields nothing, just like jQuery does
+			if (target === null) return;
+
+			var win = isWin(this),
+				elem = win ? this.contentWindow || window : this,
+				$elem = $(elem),
+				targ = target,
+				attr = {},
+				toff;
+
+			switch (typeof targ) {
+				// A number will pass the regex
+				case 'number':
+				case 'string':
+					if (/^([+-]=?)?\d+(\.\d+)?(px|%)?$/.test(targ)) {
+						targ = both(targ);
+						// We are done
+						break;
+					}
+					// Relative/Absolute selector
+					targ = win ? $(targ) : $(targ, elem);
+					/* falls through */
+				case 'object':
+					if (targ.length === 0) return;
+					// DOMElement / jQuery
+					if (targ.is || targ.style) {
+						// Get the real position of the target
+						toff = (targ = $(targ)).offset();
+					}
+			}
+
+			var offset = $.isFunction(settings.offset) && settings.offset(elem, targ) || settings.offset;
+
+			$.each(settings.axis.split(''), function(i, axis) {
+				var Pos	= axis === 'x' ? 'Left' : 'Top',
+					pos = Pos.toLowerCase(),
+					key = 'scroll' + Pos,
+					prev = $elem[key](),
+					max = $scrollTo.max(elem, axis);
+
+				if (toff) {// jQuery / DOMElement
+					attr[key] = toff[pos] + (win ? 0 : prev - $elem.offset()[pos]);
+
+					// If it's a dom element, reduce the margin
+					if (settings.margin) {
+						attr[key] -= parseInt(targ.css('margin'+Pos), 10) || 0;
+						attr[key] -= parseInt(targ.css('border'+Pos+'Width'), 10) || 0;
+					}
+
+					attr[key] += offset[pos] || 0;
+
+					if (settings.over[pos]) {
+						// Scroll to a fraction of its width/height
+						attr[key] += targ[axis === 'x'?'width':'height']() * settings.over[pos];
+					}
+				} else {
+					var val = targ[pos];
+					// Handle percentage values
+					attr[key] = val.slice && val.slice(-1) === '%' ?
+						parseFloat(val) / 100 * max
+						: val;
+				}
+
+				// Number or 'number'
+				if (settings.limit && /^\d+$/.test(attr[key])) {
+					// Check the limits
+					attr[key] = attr[key] <= 0 ? 0 : Math.min(attr[key], max);
+				}
+
+				// Don't waste time animating, if there's no need.
+				if (!i && settings.axis.length > 1) {
+					if (prev === attr[key]) {
+						// No animation needed
+						attr = {};
+					} else if (queue) {
+						// Intermediate animation
+						animate(settings.onAfterFirst);
+						// Don't animate this axis again in the next iteration.
+						attr = {};
+					}
+				}
+			});
+
+			animate(settings.onAfter);
+
+			function animate(callback) {
+				var opts = $.extend({}, settings, {
+					// The queue setting conflicts with animate()
+					// Force it to always be true
+					queue: true,
+					duration: duration,
+					complete: callback && function() {
+						callback.call(elem, targ, settings);
+					}
+				});
+				$elem.animate(attr, opts);
+			}
+		});
+	};
+
+	// Max scrolling position, works on quirks mode
+	// It only fails (not too badly) on IE, quirks mode.
+	$scrollTo.max = function(elem, axis) {
+		var Dim = axis === 'x' ? 'Width' : 'Height',
+			scroll = 'scroll'+Dim;
+
+		if (!isWin(elem))
+			return elem[scroll] - $(elem)[Dim.toLowerCase()]();
+
+		var size = 'client' + Dim,
+			doc = elem.ownerDocument || elem.document,
+			html = doc.documentElement,
+			body = doc.body;
+
+		return Math.max(html[scroll], body[scroll]) - Math.min(html[size], body[size]);
+	};
+
+	function both(val) {
+		return $.isFunction(val) || $.isPlainObject(val) ? val : { top:val, left:val };
+	}
+
+	// Add special hooks so that window scroll properties can be animated
+	$.Tween.propHooks.scrollLeft =
+	$.Tween.propHooks.scrollTop = {
+		get: function(t) {
+			return $(t.elem)[t.prop]();
+		},
+		set: function(t) {
+			var curr = this.get(t);
+			// If interrupt is true and user scrolled, stop animating
+			if (t.options.interrupt && t._last && t._last !== curr) {
+				return $(t.elem).stop();
+			}
+			var next = Math.round(t.now);
+			// Don't waste CPU
+			// Browsers don't render floating point scroll
+			if (curr !== next) {
+				$(t.elem)[t.prop](next);
+				t._last = this.get(t);
+			}
+		}
+	};
+
+	// AMD requirement
+	return $scrollTo;
+});
+	
+	}
+	{ ACInfo(function() {/*! jQuery.query - Query String Modification and Creation for jQuery
+		
+		Written by Blair Mitchelmore (blair DOT mitchelmore AT gmail DOT com)
+		Licensed under the WTFPL (http://sam.zoy.org/wtfpl/).
+		Date: 2009/8/13
+		
+		@author Blair Mitchelmore
+		@version 2.2.3
+		
+		https://github.com/alrusdi/jquery-plugin-query-object
+		
+	*/});
+	
+new function(settings) { 
+  // Various Settings
+  var $separator = settings.separator || '&';
+  var $spaces = settings.spaces === false ? false : true;
+  var $suffix = settings.suffix === false ? '' : '[]';
+  var $prefix = settings.prefix === false ? false : true;
+  var $hash = $prefix ? settings.hash === true ? "#" : "?" : "";
+  var $numbers = settings.numbers === false ? false : true;
+
+  jQuery.query = new function() {
+    var is = function(o, t) {
+      return o != undefined && o !== null && (!!t ? o.constructor == t : true);
+    };
+    var parse = function(path) {
+      var m, rx = /\[([^[]*)\]/g, match = /^([^[]+)(\[.*\])?$/.exec(path), base = match[1], tokens = [];
+      while (m = rx.exec(match[2])) tokens.push(m[1]);
+      return [base, tokens];
+    };
+    var set = function(target, tokens, value) {
+      var o, token = tokens.shift();
+      if (typeof target != 'object') target = null;
+      if (token === "") {
+        if (!target) target = [];
+        if (is(target, Array)) {
+          target.push(tokens.length == 0 ? value : set(null, tokens.slice(0), value));
+        } else if (is(target, Object)) {
+          var i = 0;
+          while (target[i++] != null);
+          target[--i] = tokens.length == 0 ? value : set(target[i], tokens.slice(0), value);
+        } else {
+          target = [];
+          target.push(tokens.length == 0 ? value : set(null, tokens.slice(0), value));
+        }
+      } else if (token && token.match(/^\s*[0-9]+\s*$/)) {
+        var index = parseInt(token, 10);
+        if (!target) target = [];
+        target[index] = tokens.length == 0 ? value : set(target[index], tokens.slice(0), value);
+      } else if (token) {
+        var index = token.replace(/^\s*|\s*$/g, "");
+        if (!target) target = {};
+        if (is(target, Array)) {
+          var temp = {};
+          for (var i = 0; i < target.length; ++i) {
+            temp[i] = target[i];
+          }
+          target = temp;
+        }
+        target[index] = tokens.length == 0 ? value : set(target[index], tokens.slice(0), value);
+      } else {
+        return value;
+      }
+      return target;
+    };
+    
+    var queryObject = function(a) {
+      var self = this;
+      self.keys = {};
+      
+      if (a.queryObject) {
+        jQuery.each(a.get(), function(key, val) {
+          self.SET(key, val);
+        });
+      } else {
+        self.parseNew.apply(self, arguments);
+      }
+      return self;
+    };
+    
+    queryObject.prototype = {
+      queryObject: true,
+      parseNew: function(){
+        var self = this;
+        self.keys = {};
+        jQuery.each(arguments, function() {
+          var q = "" + this;
+          q = q.replace(/^[?#]/,''); // remove any leading ? || #
+          q = q.replace(/[;&]$/,''); // remove any trailing & || ;
+          if ($spaces) q = q.replace(/[+]/g,' '); // replace +'s with spaces
+          
+          jQuery.each(q.split(/[&;]/), function(){
+            var key = decodeURIComponent(this.split('=')[0] || "");
+            var val = decodeURIComponent(this.split('=')[1] || "");
+            
+            if (!key) return;
+            
+            if ($numbers) {
+              if (/^[+-]?[0-9]+\.[0-9]*$/.test(val)) // simple float regex
+                val = parseFloat(val);
+              else if (/^[+-]?[1-9][0-9]*$/.test(val)) // simple int regex
+                val = parseInt(val, 10);
+            }
+            
+            val = (!val && val !== 0) ? true : val;
+            
+            self.SET(key, val);
+          });
+        });
+        return self;
+      },
+      has: function(key, type) {
+        var value = this.get(key);
+        return is(value, type);
+      },
+      GET: function(key) {
+        if (!is(key)) return this.keys;
+        var parsed = parse(key), base = parsed[0], tokens = parsed[1];
+        var target = this.keys[base];
+        while (target != null && tokens.length != 0) {
+          target = target[tokens.shift()];
+        }
+        return typeof target == 'number' ? target : target || "";
+      },
+      get: function(key) {
+        var target = this.GET(key);
+        if (is(target, Object))
+          return jQuery.extend(true, {}, target);
+        else if (is(target, Array))
+          return target.slice(0);
+        return target;
+      },
+      SET: function(key, val) {
+        var value = !is(val) ? null : val;
+        var parsed = parse(key), base = parsed[0], tokens = parsed[1];
+        var target = this.keys[base];
+        this.keys[base] = set(target, tokens.slice(0), value);
+        return this;
+      },
+      set: function(key, val) {
+        return this.copy().SET(key, val);
+      },
+      REMOVE: function(key, val) {
+        if (val) {
+          var target = this.GET(key);
+          if (is(target, Array)) {
+            for (tval in target) {
+                target[tval] = target[tval].toString();
+            }
+            var index = $.inArray(val, target);
+            if (index >= 0) {
+              key = target.splice(index, 1);
+              key = key[index];
+            } else {
+              return;
+            }
+          } else if (val != target) {
+              return;
+          }
+        }
+        return this.SET(key, null).COMPACT();
+      },
+      remove: function(key, val) {
+        return this.copy().REMOVE(key, val);
+      },
+      EMPTY: function() {
+        var self = this;
+        jQuery.each(self.keys, function(key, value) {
+          delete self.keys[key];
+        });
+        return self;
+      },
+      load: function(url) {
+        var hash = url.replace(/^.*?[#](.+?)(?:\?.+)?$/, "$1");
+        var search = url.replace(/^.*?[?](.+?)(?:#.+)?$/, "$1");
+        return new queryObject(url.length == search.length ? '' : search, url.length == hash.length ? '' : hash);
+      },
+      empty: function() {
+        return this.copy().EMPTY();
+      },
+      copy: function() {
+        return new queryObject(this);
+      },
+      COMPACT: function() {
+        function build(orig) {
+          var obj = typeof orig == "object" ? is(orig, Array) ? [] : {} : orig;
+          if (typeof orig == 'object') {
+            function add(o, key, value) {
+              if (is(o, Array))
+                o.push(value);
+              else
+                o[key] = value;
+            }
+            jQuery.each(orig, function(key, value) {
+              if (!is(value)) return true;
+              add(obj, key, build(value));
+            });
+          }
+          return obj;
+        }
+        this.keys = build(this.keys);
+        return this;
+      },
+      compact: function() {
+        return this.copy().COMPACT();
+      },
+      toString: function() {
+        var i = 0, queryString = [], chunks = [], self = this;
+        var encode = function(str) {
+          str = str + "";
+          str = encodeURIComponent(str);
+          if ($spaces) str = str.replace(/%20/g, "+");
+          return str;
+        };
+        var addFields = function(arr, key, value) {
+          if (!is(value) || value === false) return;
+          var o = [encode(key)];
+          if (value !== true) {
+            o.push("=");
+            o.push(encode(value));
+          }
+          arr.push(o.join(""));
+        };
+        var build = function(obj, base) {
+          var newKey = function(key) {
+            return !base || base == "" ? [key].join("") : [base, "[", key, "]"].join("");
+          };
+          jQuery.each(obj, function(key, value) {
+            if (typeof value == 'object') 
+              build(value, newKey(key));
+            else
+              addFields(chunks, newKey(key), value);
+          });
+        };
+        
+        build(this.keys);
+        
+        if (chunks.length > 0) queryString.push($hash);
+        queryString.push(chunks.join($separator));
+        
+        return queryString.join("");
+      }
+    };
+    
+    return new queryObject(location.search, location.hash);
+  };
+}(jQuery.query || {}); // Pass in jQuery.query as settings object
+	
+	}
+	
+	{/*! jQuery Textarea AutoSize plugin
+		
+		Author: Javier Julio
+		Licensed under the MIT license
+		https://github.com/javierjulio/textarea-autosize
+		
+		*/
+		(function ($, window, document, undefined) {
+
+		  var pluginName = "textareaAutoSize";
+		  var pluginDataName = "plugin_" + pluginName;
+
+		  var containsText = function (value) {
+			return (value.replace(/\s/g, '').length > 0);
+		  };
+
+		  function Plugin(element, options) {
+			this.element = element;
+			this.$element = $(element);
+			this.init();
+		  }
+
+		  Plugin.prototype = {
+			init: function() {
+			  var height = this.$element.outerHeight();
+			  var diff = parseInt(this.$element.css('paddingBottom')) +
+						 parseInt(this.$element.css('paddingTop')) || 0;
+
+			  if (containsText(this.element.value)) {
+				this.$element.height(this.element.scrollHeight - diff);
+			  }
+
+			  // keyup is required for IE to properly reset height when deleting text
+			  this.$element.on('input keyup', function(event) {
+				var $window = $(window);
+				var currentScrollPosition = $window.scrollTop();
+
+				$(this)
+				  .height(0)
+				  .height(this.scrollHeight - diff);
+
+				$window.scrollTop(currentScrollPosition);
+			  });
+			}
+		  };
+
+		  $.fn[pluginName] = function (options) {
+			this.each(function() {
+			  if (!$.data(this, pluginDataName)) {
+				$.data(this, pluginDataName, new Plugin(this, options));
+			  }
+			});
+			return this;
+		  };
+
+		})(jQuery, window, document);
+	}
 	
 	
 	
@@ -1343,59 +1933,202 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 //! AW FUNCTIONS
 	(function($){
 		
-		$AW_SCROLL = $SCROLL = function(option) {/*! AW_SCROLL
+		$AW_extLoad = function(files, callback) {/*! AW_extLoad css/js
 			
-			Last upadate _2019_01_30_09_22_21_22
+			Last upadate _2019_08_02_15_22_35_48
+			(c) Alvio Wayne
+			The MIT License (MIT)
+			
+			*/
+			
+			var fCount = files.length;
+			var fCountLoad = 0;
+			
+			function cssLoad(file) {
+				
+				var link = $('<link>', {rel: 'stylesheet', type: 'text/css', 'href': file}).appendTo('head');
+				var link = link[0];
+//				console.log(link);
+				
+				link.onload = function () {
+					
+//					console.log('onload');
+//					console.log(link);
+					ifCallback();
+					
+				};
+				link.onerror = function () {
+					
+//					console.log('onerror');
+//					console.log(link);
+					ifCallback();
+					
+				};
+				
+			}
+			function jsLoad(file) {
+				
+				var script = document.createElement("script");
+				script.src = file;
+				script.type = 'text/javascript';
+				script.onload = function() {
+					
+//					console.log('onload');
+//					console.log(script);
+					ifCallback();
+					
+				};
+				script.onload = function() {
+					
+//					console.log('onload');
+//					console.log(script);
+					ifCallback();
+					
+				};
+				document.getElementsByTagName("head")[0].appendChild(script);
+				
+			}
+			function ifCallback() {
+				
+				fCountLoad++
+				if (fCount == fCountLoad) {
+					
+					callback();
+					
+				} else {
+					
+					
+					
+				}
+				
+			}
+			
+			$(files).each(function() {
+				
+				var This = this;
+				var ext = This.substr( (This.lastIndexOf('.') +1) );
+	//			console.log(ext);
+				
+				if (ext == 'css') {
+					
+					cssLoad(This);
+					
+				} else if (ext == 'js') {
+					
+					jsLoad(This);
+					
+				}
+				
+			});
+			
+		}
+		
+		
+		
+		$AW_SCROLL = $SCROLL = $SCROLL2 = function(option, param) {/*! AW_SCROLL
+			
+			Last upadate _2019_09_05_20_51_49_80
 			(c) Alvio Wayne
 			The MIT License (MIT)
 			
 			*/
 			
 			switch(option) {
-				case 'hide':
+				
+				case 'hide': {
 					
-					$('html').addClass("scrollHide");
+					console.log('scrollHide');
 					
-					// создадим элемент с прокруткой
-					var div = document.createElement('div');
-					
-					div.style.overflowY = 'scroll';
-					div.style.width = '50px';
-					div.style.height = '50px';
-					
-					// при display:none размеры нельзя узнать
-					// нужно, чтобы элемент был видим,
-					// visibility:hidden - можно, т.к. сохраняет геометрию
-					div.style.visibility = 'hidden';
-					
-					document.body.appendChild(div);
-					var scrollWidth = div.offsetWidth - div.clientWidth;
-					document.body.removeChild(div);
-					
-					if (!$('#onScrollHideFix').length) {
-						$('head').append('<style type="text/css" id="onScrollHideFix"></style>');
+					if (document.body.offsetWidth < window.outerWidth && !$('html').hasClass("scrollHide")) {
+						
+						$('html').addClass("scrollHide");
+						$('html').addClass('awit_nav_rc_disable');
+						
+						// create a scroll element
+						var div = document.createElement('div');
+						
+						div.style.overflowY = 'scroll';
+						div.style.width = '50px';
+						div.style.height = '50px';
+						
+						// when display: none sizes cannot be recognized
+						// you need the element to be visible
+						// visibility: hidden - because preserves geometry
+						div.style.visibility = 'hidden';
+						
+						document.body.appendChild(div);
+						var scrollWidth = div.offsetWidth - div.clientWidth;
+						document.body.removeChild(div);
+						
+						if (!$('#onScrollHideFix').length) {
+							$('head').append('<style type="text/css" id="onScrollHideFix"></style>');
+						}
+						$('#onScrollHideFix').html('html.scrollHide .onScrollHideFix {margin-right: '+scrollWidth+'px;}');
+						
+						$('body').css("margin-right", scrollWidth);
+						$('html, body').css("overflow", 'hidden');
+						
 					}
-					$('#onScrollHideFix').html('html.scrollHide .onScrollHideFix {margin-right: '+scrollWidth+'px;}');
 					
-					$('body').css("margin-right", scrollWidth);
-	//				$('html, body').css("overflow", 'hidden');
-					$('html').css("overflow", 'hidden');
-					
-				break;
-				case 'reset':
+				} break;
+				case 'reset': {
 					
 					$('html').removeClass("scrollHide");
-					
+					$('html').removeClass('awit_nav_rc_disable');
 					$('body').css("margin-right", '');
-	//				$('html, body').css("overflow", '');
-					$('html').css("overflow", '');
+					$('html, body').css("overflow", '');
 					
-				break;
+				} break;
+				
+				case 'scrollTo_init': {
+					
+					$(document).on('click', '*[data-scrollTo]', function(e) {
+						
+						e.preventDefault();
+						
+						var href = '#' + $(this).attr('data-scrollTo');
+						var href = $(href);
+						
+						function getScrollParent(node) { // Find first scrollable parent
+							
+							if ($(node).css('overflow-y') == 'auto') {
+								return node;
+							} else {
+								return getScrollParent(node.parent());
+							}
+							
+						};
+						var $container = $(getScrollParent(href));
+						
+						var speed = 600;
+						if ($(this).hasAttr('data-scrollTo-speed')) {
+							speed = $(this).attr('data-scrollTo-speed');
+						}
+						
+						
+						
+						var container_border_top = $container.css("border-top-width");
+						container_border_top = parseInt(container_border_top);
+						
+						$($container).scrollTo(
+							href,
+							speed,
+							{axis: 'y', offset: {top: -container_border_top}},
+						);
+						
+						
+						
+					});
+					
+				} break;
+				
 				default:
 				break;
+				
 			}
 			
 		}
+		$SCROLL2('scrollTo_init');
 		
 		$getUrlParameter = function(sParam) {
 			var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -1411,9 +2144,9 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 				}
 			}
 		};
-		$AW_URL = $URL = function(option, param) {/*! AW_URL
+		$AW_URL = $URL = function(option, param, param1) {/*! AW_URL
 			
-			Last upadate _2019_04_17_15_28_53_68
+			Last upadate _2019_09_04_19_24_49_03
 			(c) Alvio Wayne
 			The MIT License (MIT)
 			
@@ -1460,6 +2193,31 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 					return $getUrlParameter(param);
 					
 				break;
+				
+				
+				
+				case 'get':
+					
+					return $.query.get(param);
+					
+				break;
+				case 'set':
+					
+					return $.query.set(param, param1).toString();
+					
+				break;
+				case 'remove':
+					
+					return $.query.remove(param).toString();
+					
+				break;
+				case 'query':
+					
+					return $.query.set(param, param1).toString();
+					
+				break;
+//				$URL('query','test','test');
+				
 				default:
 					
 					return window.location.href;
@@ -1471,7 +2229,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		
 		$AWIT_NAV = $AN = function(type, param){/*! AWIT_NAV
 			
-			Last upadate _2019_04_16_14_36_19_09
+			Last upadate _2019_09_05_20_51_49_80
 			(c) Alvio Wayne
 			The MIT License (MIT)
 			
@@ -1483,6 +2241,13 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			var awit_nav_class = '.'+awit_nav;
 			var awit_nav_open = 'awit_nav_open';
 			var awit_nav_open_class = '.'+awit_nav_open;
+			var awit_nav_close = 'awit_nav_close';
+			
+			var awit_nav_disable = 'awit_nav_disable';
+			var awit_nav_disable_class = '.'+awit_nav_disable;
+			
+			var awit_nav_rc_disable = 'awit_nav_rc_disable';
+			var awit_nav_rc_disable_class = '.'+awit_nav_rc_disable;
 			
 			var click;
 			var click_obj;
@@ -1495,9 +2260,8 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			
 			
 			
-
+			
 			if (type == 'close') {
-//				awit_nav_close(awit_nav_open);
 				an_close();
 				return;
 			}
@@ -1515,109 +2279,103 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			// FUNCTIONS
 			function an_width() {
 				
-//				var target_width = $(target).width();
 				var target_width = $(target).width();
-//				console.log(target);
-//				console.log(target_width);
 				return target_width + 'px';
 				
 			}
+			function an_close() {
+				
+				var target_id = $(awit_nav_class+awit_nav_open_class);
+				
+				// close all
+				$(awit_nav_open_class).removeClass(awit_nav_open).css('transform', '');
+				
+				
+//				console.log(target_id);
+				$(target_id).trigger({
+					type: awit_nav_close,
+					id: target_id,
+				});
+				
+			}
+			
 			function an_open() {
 				
 				if (!$('html').hasClass('awit_nav_disable')) { if (click.length) { if (click !== '') {
 					
 //					console.log(click);
+//					console.log(target);
+//					console.log($(target));
 					
-					
-					
-					// classes
-					$('html, .'+awit_nav_open).removeClass(awit_nav_open); // close all before open
-					$(target).addClass('awit_nav_anim');
-					
-					if (!$(target).hasClass(awit_nav_open)) {
-						$(target).addClass(awit_nav_open);
-					} else {
-						$(target).removeClass(awit_nav_open);
-					}
-					
-					if (!$('html').hasClass(awit_nav_open)) {
-						$('html').addClass(awit_nav_open);
-					} else {
-						$('html').removeClass(awit_nav_open);
+					if ($(target).hasClass(awit_nav_open)) {
+						
+						$(awit_nav_open_class).removeClass(awit_nav_open).css('transform', '');
+						return;
+						
 					}
 					
 					
 					
-					// animation & position
-//					awit_nav_anim_target = 'awit_nav_anim_'+target_wh;
-					awit_nav_anim_target = 'awit_nav_anim';
-					awit_nav_anim_target_class = '.'+awit_nav_anim_target;
-//					console.log(awit_nav_anim_target);
-					
-					$.each($(target), function() {
-						
-//						console.log(this);
-//						console.log($(this).hasClass('awit_nav_right'));
-						
-//						var target_width = an_width();
-						
-						var target_width = $(this).width()+'px';
-						var target_id_wh = $(this).attr('id'); // without hash
-						var target_id = '#'+target_id_wh;
-						var an_tid = 'awit_nav_'+target_id_wh;
-						
-						if (!$(this).find(awit_nav_anim_target_class).length) { // if tag style awit_nav_anim exists
-							
-							$(this).append('<style class="'+awit_nav_anim_target+'"></style>');
-
-							if ($(this).hasClass('awit_nav_right')) { // awit_nav_right
-								$(this).find(awit_nav_anim_target_class).html(''
-									+'@keyframes '+an_tid+'_right_close { 0% { -webkit-transform: translateX(-'+target_width+'); transform: translateX(-'+target_width+'); } 100% { -webkit-transform: translateX(0); transform: translateX(0); } }'
-									+'@keyframes '+an_tid+'_right_open { 0% { -webkit-transform: translateX(0); transform: translateX(0); } 100% { -webkit-transform: translateX(-'+target_width+'); transform: translateX(-'+target_width+'); } }'
-									+target_id+' {right: -'+target_width+'}'
-									+target_id+'.awit_nav_anim {animation-name: '+an_tid+'_right_close;}'
-									+target_id+'.awit_nav_open {pointer-events: auto!important;animation-name: '+an_tid+'_right_open!important;}'
-								+'');
-							} else { // awit_nav_left
-								$(this).find(awit_nav_anim_target_class).html(''
-									+'@keyframes '+an_tid+'_left_close { 0% { -webkit-transform: translateX('+target_width+'); transform: translateX('+target_width+'); } 100% { -webkit-transform: translateX(0); transform: translateX(0); } }'
-									+'@keyframes '+an_tid+'_left_open { 0% { -webkit-transform: translateX(0); transform: translateX(0); } 100% { -webkit-transform: translateX('+target_width+'); transform: translateX('+target_width+'); } }'
-									+target_id+' {left: -'+target_width+'}'
-									+target_id+'.awit_nav_anim {animation-name: '+an_tid+'_left_close;}'
-									+target_id+'.awit_nav_open {pointer-events: auto!important;animation-name: '+an_tid+'_left_open!important;}'
-								+'');
-							}
-							
-						}
-						
-					});
+					// close all
+					$(awit_nav_open_class).removeClass(awit_nav_open).css('transform', '');
 					
 					
+					// open
+					$('html').addClass(awit_nav_open);
+					var an_width = $(target).width()+'px';
+					
+					if ($(target).hasClass('awit_nav_right')) { // awit_nav_right
+						
+						$(target).css({
+							'transform': 'translateX(-'+an_width+')',
+							'transition': 'transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1)',
+						}).addClass(awit_nav_open);
+						
+					} else { // awit_nav_left
+						
+						$(target).css({
+							'transform': 'translateX('+an_width+')',
+							'transition': 'transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1)',
+						}).addClass(awit_nav_open);
+						
+					}
 					
 					// event
-					$(document).trigger({
-						type: "awit_nav_open",
+					$(target).trigger({
+						type: awit_nav_open,
 						click: click_obj,
-						target: target_obj,
-						target_id: target,
+						id: target,
 					});
+					
+					
 					
 				}}};
 				
 			}
-			function an_close() {
+			$(window).on('resize', function(){
 				
-				var target = $(awit_nav_class+awit_nav_open_class)[0];
-//				console.log(target);
+//				console.log($(target));
+				var an_width = $(target).width()+'px';
 				
-				$('html, '+awit_nav_open_class).removeClass(awit_nav_open);
+				if ($(target).hasClass(awit_nav_open)) {
 				
-				$(document).trigger({
-					type: "awit_nav_close",
-					target: target,
-				});
+					if ($(target).hasClass('awit_nav_right')) { // awit_nav_right
+						
+						$(target).css({
+							'transform': 'translateX(-'+an_width+')',
+						});
+						
+					} else { // awit_nav_left
+						
+						$(target).css({
+							'transform': 'translateX('+an_width+')',
+						});
+						
+					}
 				
-			}
+				}
+				
+			});
 			
 			
 			
@@ -1625,6 +2383,8 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			
 			// ON CLICK
 			$(document).on('click', function(e) { if (e.which !== 3) { // NAV OPEN
+				
+//				e.preventDefault();
 				
 //				console.log(e.target);
 				
@@ -1643,10 +2403,16 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 				target_obj = $(target)[0];
 //				console.log(target_obj);
 				
+				if ($(e.target).closest(data_navb).length) {
+					e.preventDefault();
+				}
+				
 				an_open();
 				
 			}});
 			$(document).on('click', function(e) { if (e.which !== 3) { // NAV CLOSE
+				
+//				e.preventDefault();
 				
 	//			console.log('CLOSE');
 	//			console.log(e.target);
@@ -1654,7 +2420,6 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	//			console.log($(e.target).closest(data_navb).length);
 				
 				if (!$(e.target).is('.awit_nav.'+awit_nav_open) && !$(e.target).closest('.awit_nav.'+awit_nav_open).length && !$(e.target).closest(data_navb).length) {
-//					awit_nav_close();
 					an_close();
 				}
 				
@@ -1663,7 +2428,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	//			console.log(e.keyCode);
 				var code = (e.keyCode ? e.keyCode : e.which);
 				if ($('html').hasClass(awit_nav_open) && code === 27) {
-					awit_nav_close();
+					an_close();
 				}
 			});
 			
@@ -1671,62 +2436,259 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			
 			
 			
-			// RC MENU
-			var root = document.documentElement;
+			// RC MENU // open .awit_nav_rc or open on data-awit_nav_rc_click
 			var awit_nav_rc_class = '.awit_nav_rc';
+			var awit_nav_rc_click_attr_name = 'data-awit_nav_rc_click';
+			var awit_nav_rc_click_attr = '['+awit_nav_rc_click_attr_name+']';
 			
 			$(document).on('pointerdown', function(e) { if (e.which==3) {
 				
-				clearInterval(window.xqq);
-				document.oncontextmenu=function(){return false};
+				if ($('html').hasClass(awit_nav_disable)) {return false};
 				
-				x = setInterval(function () {
+				if ($(e.target).closest(awit_nav_rc_click_attr).length || $(awit_nav_rc_class).length || $(awit_nav_open_class).length) {
+					
+					clearTimeout(window.awit_nav_rc_sT1);
+					clearTimeout(window.awit_nav_rc_sT2);
+					
+					document.oncontextmenu=function(){return false};
+					awit_nav_rc_sT1 = setTimeout(function () {
+						document.oncontextmenu=function(){return true};
+						$('html').addClass('contextmenu');
+					}, 500);
+					
+				}
+				else if (!$(e.target).closest(awit_nav_rc_click_attr).length || !$(awit_nav_rc_class).length && !$(awit_nav_open_class).length) {
 					document.oncontextmenu=function(){return true};
-					root.classList.add("contextmenu");
-				},
-				500);
+				};
 				
 			}});
-			$(document).on('pointerup', function(e) {
+			$(document).on('pointerup', function(e) { if (e.which==3) {
 				
-				clearInterval(window.x);
-				clearInterval(window.xqq);
-				xqq = setInterval(function () {
-					root.classList.remove("contextmenu");
-				},
-				500);
+				if ($('html').hasClass(awit_nav_disable)) {return false};
 				
-				if (!root.classList.contains("contextmenu")) {
+				clearTimeout(window.awit_nav_rc_sT1);
+				clearTimeout(window.awit_nav_rc_sT2);
+				
+				awit_nav_rc_sT2 = setTimeout(function () {
+					$('html').removeClass('contextmenu');
+				}, 300);
+				
+				if (!$('html').hasClass('contextmenu') && !$('html').hasClass(awit_nav_rc_disable)) {
 					
-					if (e.which==3 && !$(awit_nav_rc_class).hasClass(awit_nav_open)) {
+					var awit_nav_rc_click = $(e.target).closest(awit_nav_rc_click_attr);
+					var awit_nav_rc_click_id = '#'+$(awit_nav_rc_click).attr(awit_nav_rc_click_attr_name);
+					
+					if (e.which==3 && $(awit_nav_rc_click).length && !$(awit_nav_rc_click_id).hasClass(awit_nav_open)) {
 						
-						click = $(document);
-		//				console.log(click);
+						click = $(awit_nav_rc_click_id);
+			//			console.log(click);
 						
 						click_obj = click[0];
-		//				console.log(click_obj);
+			//			console.log(click_obj);
 						
-						target_wh = 'awit_nav_rc';
-		//				console.log(target_wh);
-						
-						target = '.'+target_wh;
-		//				console.log(target);
+						target = $(awit_nav_rc_click_id);
+			//			console.log(target);
 						
 						target_obj = $(target)[0];
-		//				console.log(target_obj);
+			//			console.log(target_obj);
 						
 						an_open();
 						
-					} else if (e.which==3) {
+					}
+					else if (e.which==3 && $(awit_nav_rc_class).length && !$(awit_nav_rc_class).hasClass(awit_nav_open)) {
 						
-//						awit_nav_close(awit_nav_rc_class);
+						click = $(document);
+			//			console.log(click);
+						
+						click_obj = click[0];
+			//			console.log(click_obj);
+						
+						target_wh = 'awit_nav_rc';
+			//			console.log(target_wh);
+						
+						target = '.'+target_wh;
+			//			console.log(target);
+						
+						target_obj = $(target)[0];
+			//			console.log(target_obj);
+						
+						an_open();
+						
+					}
+					else if (e.which==3) {
+						
 						an_close();
 						
 					}
 					
 				}
 				
-			});
+			}});
+			
+			
+			
+			
+			
+		}
+		
+		$AWIT_MODAL = $AM = function(type, param){/*! AWIT_MODAL
+			
+			Last upadate _2019_09_05_20_51_49_80
+			(c) Alvio Wayne
+			The MIT License (MIT)
+			
+			*/
+			
+			
+			
+			// VARS
+			// '+VAR+'
+			var main = 'awit_modal';
+			var main_class = '.'+main;
+			
+			var wrap = 'awit_modal_wrap';
+			var wrap_class = '.'+wrap;
+			
+			var content = 'awit_modal_content';
+			var content_class = '.'+main;
+			
+			var open = 'awit_modal_open';
+			var open_class = '.'+open;
+			
+			var close = 'awit_modal_close';
+			var close_class = '.'+close;
+			
+			var disable = 'awit_modal_disable';
+			var disable_class = '.'+main;
+			
+			
+			
+			var dataAttr = 'data-awit_modal';
+			var dataAttr_class = '['+dataAttr+']';
+			var dataAttr_class_all = '*'+dataAttr_class;
+			
+			
+			
+			var click;
+			var target;
+			var target_id;
+			
+			
+			
+			
+			
+			// TYPES
+			if (type == 'close') {
+				close_modal();
+				return;
+			}
+			
+			
+			
+			
+			
+			// ACTIONS
+			$(document).on('click', dataAttr_class_all, function(e) { if (e.which !== 3) {
+				
+//				console.log($(this));
+				
+				e.preventDefault();
+				
+				click = $(this);
+				target = $(this).attr(dataAttr);
+				target_id = '#'+target;
+//				console.log(target_id);
+//				console.log($(target_id).length);
+//				console.log(target);
+				
+				if (!$('html').hasClass(disable) && !$(target_id).length) {
+					$('body').append('<div class="'+main+'" id="'+target+'" style="display:none;"><div class="'+content+'"></div></div>');
+				}
+				if (!$('html').hasClass(disable) && target.length && $(target_id).length) {
+					open_modal();
+				}
+				
+			}});
+			
+			// if pointerdown and (select text) go out modal dont close
+			var close_allow = 1;
+			$(document).on('pointerdown', function(e){ if (e.which == 1) { // close
+				
+				close_allow = 1;
+				if ($(e.target).closest(target_id).length) {
+					close_allow = 0;
+				}
+//				console.log(close_allow);
+//				console.log($(e.target).closest(target_id).length);
+				
+			}});
+			$(document).on('pointerup', function(e){ if (e.which == 1) { // if pointerup just out modal - close
+				
+//				console.log(close_allow);
+				
+//				e.preventDefault();
+				
+//				console.log(e);
+//				console.log(target_id);
+//				console.log($(e.target).closest(target_id));
+				
+				if ($(e.target).closest(target_id).length) {
+					close_allow = 0;
+				}
+				if (!$(e.target).closest(click).length && !$(e.target).closest(target_id).length && close_allow) {
+					$AWIT_MODAL('close');
+				}
+				
+			}});
+			
+			
+			
+			
+			
+			// FUNCTIONS
+			function open_modal() {
+				
+//				console.log('open');
+//				console.log(target_id);
+//				console.log($(target_id));
+//				console.log(click);
+				
+				$AWIT_NAV('close');
+//				$AWIT_NAV('disable');
+				
+				if (!$(target_id).closest(wrap_class).length) { $(target_id).wrap('<div class="'+wrap+'"></div>'); }
+				
+				$(target_id).css('display','');
+				$(target_id).closest(wrap_class).addClass(open);
+				if ($(target_id).closest(wrap_class).length) {
+					
+//					console.log('scrollHide call');
+					$SCROLL2('hide');
+					
+				};
+				
+ 				$(target_id).trigger({
+					type: open,
+					click: click,
+				});
+				
+			}
+			function close_modal() {
+				
+//				$AWIT_NAV('enable');
+				
+				var target_id = '#'+$('.awit_modal_wrap.awit_modal_open .awit_modal').attr('id');
+				
+				if ($(open_class).closest(wrap_class).length) { $SCROLL2('reset'); };
+				$(open_class).removeClass(open);
+				
+//				console.log(target_id);
+				
+				$(target_id).trigger({
+					type: close,
+				});
+				
+			}
 			
 			
 			
@@ -1736,7 +2698,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		
 		$.fn.aw_materialInput = $.fn.materialInput = $.fn.inputText = function(option) {/*! AW materialInput
 			
-			Last upadate _2019_03_20_16_32_41_51
+			Last upadate _2019_10_05_19_17_45_94
 			(c) Alvio Wayne
 			The MIT License (MIT)
 			
@@ -1798,67 +2760,89 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 				var wrap = $(this).closest(".inputwrap");
 				var inputline = $(this).closest(".inputline");
 				
-				if ($(this).is('input')) {
+				if ($(this).hasAttr("placeholder")) {
 					var inputph = $(this).attr("placeholder");
 					$(this).removeAttr("placeholder");
-				} else if ($(this).is('div')) {
+				}  else if ($(this).hasAttr("data-placeholder")) {
 					var inputph = $(this).attr("data-placeholder");
 					$(this).removeAttr("data-placeholder");
 				}
 				
-	//			console.log($(this).css('padding-left'));
+//				console.log($(this));
+//				console.log($(this).css('padding-left'));
+//				console.log($(this).closest(mainClass));
+				
+				var pLeft = $(this).css('padding-left');
+				var pRight = $(this).css('padding-right');
+				var height = $(this).css('height');
 				
 				if (inputph) {
 					wrap.append('<div class="'+labelName+'">'+inputph+'</div>');
-					var fl_pLeft = $(this).css('padding-left');
-					var fl_pRight = $(this).css('padding-right');
-					if (fl_pLeft !== '0px') {
-						$(labelClass).css('left', fl_pLeft);
+					if (pLeft !== '0px') {
+						$(wrap).find(labelClass).css('left', pLeft);
 					}
-					if (fl_pRight !== '0px') {
-						$(labelClass).css('right', fl_pRight);
+					if (pRight !== '0px') {
+						$(wrap).find(labelClass).css('right', pRight);
+					}
+					if (height !== '0px') {
+						$(wrap).find(labelClass).css('height', height);
 					}
 				}
 				wrap.append('<div class="inputline"></div>');
-				var il_pLeft = $(this).css('padding-left');
-				var il_pRight = $(this).css('padding-right');
-				if (il_pLeft !== '0px') {
-					$(lineClass).css('left', il_pLeft);
+				if (pLeft !== '0px') {
+					$(wrap).find(lineClass).css('left', pLeft);
 				}
-				if (il_pRight !== '0px') {
-					$(lineClass).css('right', il_pRight);
+				if (pRight !== '0px') {
+					$(wrap).find(lineClass).css('right', pRight);
 				}
 				
 				if ($(this).val() || This.is('div')) {
+					wrap.addClass('animOff');
 					wrap.addClass("inputfocus");
+					setTimeout(function(){ wrap.removeClass('animOff'); }, 50);
 				}
 				
-	//			if (!$(this).attr('readonly')) {
 				$(this).focus(function(){
 					
-	//				var pLeft = $(this).css('padding-left');
-	//				if (pLeft !== '0px') { $(labelClass).css('left', pLeft); }
+					if (!$(this).attr('readonly')) {
+						
+						wrap.addClass("inputfocus");
+						wrap.addClass("inputfocusline");
+						
+					}
 					
-	//				console.log(ilfalse);
-	//				if (ilfalse || $(this).attr('readonly')) { return false };
-					if ($(this).attr('readonly')) { return false };
-					
-					wrap.addClass("inputfocus");
-					wrap.addClass("inputfocusline");
 				});
 				$(this).blur(function() {
 					
 					wrap.removeClass("inputfocusline");
 					
-	//				if (ilfalse || $(this).attr('readonly')) { return false };
-					if ($(this).attr('readonly')) { return false };
-					if ($(this).val()) {
-						wrap.addClass('inputfocus');
-					} else {
-						wrap.removeClass('inputfocus');
+					if (!$(this).attr('readonly')) {
+						
+						if ($(this).val()) {
+							wrap.addClass('inputfocus');
+						} else {
+							wrap.removeClass('inputfocus');
+						}
+						
 					}
+					
 				});
-	//			}
+				$(this).change(function() {
+					
+					if (!$(this).attr('readonly') || $(this).val().trim() !== '') {
+						
+						wrap.addClass('animOff');
+						if ($(this).val()) {
+							wrap.addClass('inputfocus');
+						} else {
+							wrap.removeClass('inputfocus');
+						}
+						
+						setTimeout(function(){ wrap.removeClass('animOff'); }, 50);
+						
+					};
+					
+				});
 				
 				if ( $(this).css('display') == 'none' ) {
 					wrap.css('display', 'none');
@@ -1870,6 +2854,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			} else if ($(this).closest('.inputwrap').length) {
 				
 				var wrap = $(this).closest(".inputwrap");
+				
 				if ($(this).val() || This.is('div')) {
 					wrap.addClass("inputfocus");
 				}
@@ -1950,6 +2935,383 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			
 		}
 		
+		$materialLoader = function(type, target, uOption) {/*! AW materialLoader
+			
+			Last upadate _2019_08_04_00_29_35_11
+			(c) Alvio Wayne
+			The MIT License (MIT)
+			
+			*/
+			
+			var iOption = {
+				
+				method: 'append', // or html
+				position: 'absolute', // or relative
+				color: '#c9aa71',
+				strokeWidth: '4',
+				scale: '1',
+				backColor: '',
+				varf: function(){
+					return $(target).find('.materialLoader_wrap')[0];
+				},
+				done: function(){},
+				
+			};
+			$.extend(iOption, uOption);
+			
+			switch(type) {
+				
+				case 'spinner': {
+					
+					if (!$(target).find('.materialLoader_wrap').length) {
+						
+						if (iOption.method == 'append' && iOption.position == 'absolute' && $(target).css('position') == 'static') {
+							$(target).css('position','relative');
+						}
+						
+						var style_scale = 'transform: scale('+iOption.scale+'); -webkit-transform: scale('+iOption.scale+');';
+						
+						var style_backColor = '';
+ 						if (iOption.backColor !== '') {
+							style_backColor = 'background-color: '+iOption.backColor+';';
+						}
+						
+						var style_position = '';
+						if (iOption.position == 'relative') {
+							style_position = 'position: relative;';
+						}
+						
+						var code = '<div class="materialLoader_wrap" style="'+style_backColor+style_position+'"><div class="materialLoader" style="'+style_scale+'"><svg class="materialLoader_svg"><circle class="materialLoader_circle" cx="50" cy="50" r="20" fill="none" stroke-width="'+iOption.strokeWidth+'" stroke-miterlimit="10" style="stroke:'+iOption.color+';"></circle></svg></div></div>';
+						
+						
+						if (iOption.method == 'append') {
+							
+							$(target).append(code);
+							
+						} else if (iOption.method == 'html') {
+							
+							$(target).html(code);
+							
+						}
+						
+						iOption.done($(target).find('.materialLoader_wrap')[0]);
+						
+					}
+					
+				} break;
+				case 'remove': {
+					
+					if ($(target).find('.materialLoader_wrap').length) {
+						
+						$(target).find('.materialLoader_wrap').remove();
+						
+					}
+					
+				} break;
+				
+				default:
+				break;
+				
+			}
+			
+		}
+		
+		$AW_animList = function() {/*! AW animList
+			
+			Last upadate _2019_08_01_19_35_27_37
+			(c) Alvio Wayne
+			The MIT License (MIT)
+			
+			*/
+			
+			var main_name = 'animList';
+			var main_name_class = '.'+main_name;
+			
+			$.onCreate(main_name_class, function(elements) {
+				
+//				console.log(elements);
+				
+				$(elements).each(function() {
+					
+					var animDelay = -100;
+					
+					var delay = 100;
+					if ($(this).attr("data-animList-delay")) {
+						delay = $(this).attr("data-animList-delay");
+					}
+					
+					var animList_elem = $(this).find('> *');
+//					console.log(animList_elem);
+					
+					$(animList_elem).each(function() {
+						
+//						console.log($(this));
+						
+						$(this).addClass('animList_elem');
+						
+//						animDelay = animDelay + 100;
+						animDelay = animDelay + delay;
+						$(this).css('animation-delay', animDelay + 'ms');
+						
+					});
+					
+				});
+				
+			},true);
+			
+		}
+		
+		
+
+		$.fn.inputFilter = function(inputFilter) { /*! inputFilter
+			
+			https://stackoverflow.com/a/995193
+			
+			*/
+			
+			return this.on("input keydown keyup mousedown mouseup select contextmenu drop", function() {
+				if (inputFilter(this.value)) {
+					this.oldValue = this.value;
+					this.oldSelectionStart = this.selectionStart;
+					this.oldSelectionEnd = this.selectionEnd;
+				} else if (this.hasOwnProperty("oldValue")) {
+					this.value = this.oldValue;
+					this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+				}
+			});
+			
+		};
+		$('input[type="text"].onlyNum').inputFilter(function(value) {
+			return /^\d*$/.test(value);
+		});
+		$.onCreate('input[type="text"].onlyNum', function(elements) {
+			$(elements).inputFilter(function(value) { return /^\d*$/.test(value); });
+		},true);
+		
+		
+		
+		$.fn.aw_numberInput = $.fn.numberInput = function(option) { /*! AW numberInput
+			
+			Alvio Wayne
+			Last upadate _2019_09_10_13_43_59_14
+			
+			*/
+			
+	//		console.log($(this));
+			
+			var mainName = 'numberInput';
+			var mainClass = '.'+mainName;
+				
+			var wrapName = 'numberInput_wrap';
+			var wrapClass = '.'+wrapName;
+				
+			var buttonName = 'numberInput_button';
+			var buttonClass = '.'+buttonName;
+			
+			var bminusName = 'numberInput_minus';
+			var bminusClass = '.'+bminusName;
+			
+			var bplusName = 'numberInput_plus';
+			var bplusClass = '.'+bplusName;
+			
+			
+			
+			$(this).each(function(){ if ( $(this)[0].nodeName == 'INPUT' && !$(this).hasClass('disabled') && !$(this).closest(wrapClass).length ) {
+				
+				if ($(this).closest('.materialInput'),length) {
+					$(this).closest('.materialInput').wrap('<div class="'+wrapName+'"></div>');
+				} else {
+					$(this).wrap('<div class="'+wrapName+'"></div>');
+				}
+				
+				var input = $(this);
+				var wrap = $(this).closest(wrapClass);
+				var input_h = $(this).height();
+				var input_wh_style = 'height: '+input_h+'px; width: '+input_h+'px;';
+				
+				$(wrap).prepend('<button type="button" class="'+buttonName+' '+bminusName+'" style="'+input_wh_style+'"><i class="fa fa-minus"></i></button>');
+				$(wrap).append('<button type="button" class="'+buttonName+' '+bplusName+'" style="'+input_wh_style+'"><i class="fa fa-plus"></i></button>');
+				
+			}});
+			$(document).off('click', wrapClass).on('click', wrapClass, function(e) {
+											
+	//										console.log(e.target);
+	//										console.log($(e.target).closest('.numberInput_button'));
+											
+											var target = $(e.target).closest('.numberInput_button');
+											
+											if (target.hasClass(bplusName)) {
+												
+												var input = $(this).find('input[type="text"]');
+												var val = parseInt(input.val());
+	//											console.log(input);
+	//											console.log(val);
+	//											console.log(val+1);
+												input.val(val+1);
+												
+												// event
+												$(input).trigger({
+													type: 'change',
+													numberInput: 'plus',
+												});
+												
+											}
+											if (target.hasClass(bminusName)) {
+												
+												var input = $(this).find('input[type="text"]');
+												var val = parseInt(input.val());
+												input.val(val-1);
+												
+												if (input.val() < '1' || !input.val() == '1') {
+													input.val('1');
+												}
+												
+												// event
+												$(input).trigger({
+													type: 'change',
+													numberInput: 'minus',
+												});
+												
+											}
+											
+			});
+			$(document).on('change', wrapClass+' input[type="text"]', function(e) {
+				
+				if ($(this).val() < '1' || !$(this).val() == '1') {
+					$(this).val('1');
+				}
+				
+			});
+			$(wrapClass+' input[type="text"]').inputFilter(function(value) {
+				return /^\d*$/.test(value);
+			});
+			
+		};
+		
+		
+		
+		$.fn.AW_buttonConfirm = $.fn.buttonConfirm = function(property) {/*! AW_buttonConfirm
+			
+			Last upadate _2019_10_02_18_07_56_18
+			(c) Alvio Wayne
+			The MIT License (MIT)
+			
+			*/
+			
+			
+			
+			// clases
+			function toClass(param) {
+				return '.' + param;
+			}
+			var main = 'buttonConfirm';
+			var statusLine = 'buttonConfirm_statusLine';
+			var hold = 'buttonConfirm_hold';
+			var done = 'buttonConfirm_done';
+			var off = 'buttonConfirm_off';
+			var off2 = 'buttonConfirm_disable';
+			
+			
+			
+			// settings
+			var holdTime = 600;
+			var attr_holdTime = 'data-buttonConfirm_holdTime';
+			
+			var statusLine_color = '#e0b15b';
+			var attr_statusLine_color = 'data-buttonConfirm_color';
+			
+			
+			
+			switch (property) {
+				
+				case 'prepare': {
+					
+					$.each($(this), function(index, item) {
+						
+						holdTime = $(this).attr('data-buttonConfirm_holdTime');
+						
+						if (!$(this).find(toClass(statusLine)).length) {
+							
+							$(this).append('<div class="'+statusLine+'"></div>');
+							$(this).find(toClass(statusLine)).css("transition", "all "+ holdTime +"ms ease-in-out");
+							
+						}
+						
+					});
+					
+				} break
+				case 'events': {
+					
+					$(document).on('pointerdown', $(this), function(e) { if (e.which==1) {
+						
+						clearTimeout(window.buttonConfirm_cConfirm);
+						
+						var This = $(e.target).closest(toClass(main));
+						
+						if ($(This).hasClass(off) || $(This).hasClass(off2)) {return;};
+						
+						if ($(This).attr(attr_holdTime) && $(This).attr(attr_holdTime) !== '') {
+							
+							holdTime = $(This).attr(attr_holdTime);
+							
+						}
+						$(This).find(toClass(statusLine)).css("transition", "all "+ holdTime +"ms ease-in-out");
+						
+						if ($(This).attr(attr_statusLine_color) && $(This).attr(attr_statusLine_color) !== '') {
+							
+							statusLine_color = $(This).attr(attr_statusLine_color);
+							
+						}
+						$(This).find(toClass(statusLine)).css("background-color", statusLine_color);
+						
+						$(This).addClass(hold);
+								
+		//				var holdTimeT = 100;
+						holdTimeT=holdTime;
+		//				holdTimeT=parseInt(holdTime, 0);
+		//				console.log(holdTimeT);
+						buttonConfirm_cConfirm = setTimeout(function () {
+							
+							clearTimeout(buttonConfirm_cConfirm);
+							$(This).removeClass(hold);
+							
+							$(This).trigger({ // callback
+								type: done,
+								click: $(This),
+							});
+							
+						},
+						holdTimeT);
+						
+					}});
+					$(document).on('pointerup', $(this), function(e) { if (e.which==1) {
+						
+						clearTimeout(window.buttonConfirm_cConfirm);
+						
+						var This = $(e.target).closest(toClass(main));
+						
+						if ($(This).hasClass(off) || $(This).hasClass(off2)) {return;};
+						
+						$(This).find(toClass(statusLine)).css("transition", "none");
+						
+						$(This).removeClass(hold);
+						clearTimeout(window.buttonConfirm_cConfirm);
+						
+					}});
+					
+				} break
+				
+				default:
+				break;
+				
+			}
+			
+			
+			
+		}
+		
+		
+		
 	})(jQuery);
 	
 	
@@ -1958,7 +3320,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	
 //!	OTHER FUNCTIONS
 //	Scroll
-	function ScrolllToID() {/*! AW ScrolllToID
+	function ScrolllToID() {/*! AW ScrolllToID // ?X
 		
 		(c) Alvio Wayne
 		The MIT License (MIT)
@@ -2020,12 +3382,14 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			
 		});
 		
+		
+		
 		// container
 //		$('#aw_modal_buy .awm_content').css('overflow-y') == 'auto';
 		
 	};
 	
-	/*! Full Page Background
+	/*! Full Page Background ~ in dev
 		
 		Last upadate _2018_05_18_12_01_57_57
 		(c) Alvio Wayne
@@ -2134,25 +3498,28 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	};
 	
 //	Base & custom styles/js load
-	var StyleV = '';
-	if (AC_self.StyleVer !== '') {
-		StyleV = '?' + AC_self.StyleVer;
-	};
-	
-	var incBaseStyles = [];
 	function BaseCJLoadV() {/*! AW Base page style/css load & CustomStylesScripts v5.4
 		
-		Last upadate _2019_02_03_12_42_34_38
+		Last upadate _2019_08_02_23_27_45_39
 		(c) Alvio Wayne
 		The MIT License (MIT)
 		
 		*/
 		
-		if (AC_self.BaseStyle && !AC_self.UP) {
+		
+		
+		var StyleV = '';
+		if (AC_self.StyleVer !== '') {
+			StyleV = '?' + AC_self.StyleVer;
+		};
+		var incBaseStyles = [];
+		
+		
+		
+ 		if (AC_self.BaseStyle && !AC_self.UP) {
 			incBaseStyles.push(AC_path + "styles/base/base.min.css" + StyleV );
 		}
-		
-		if (AC_self.CustomStylesScripts.length) {
+ 		if (AC_self.CustomStylesScripts.length) {
 			$(AC_self.CustomStylesScripts).each(function() {
 				
 //				console.log(this);
@@ -2162,16 +3529,24 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 			});
 		}
 		
-		new loadExt(incBaseStyles, function() {
+		
+		
+//		console.log(incBaseStyles);
+		$AW_extLoad(incBaseStyles, function() {
+			
+//			console.log('AW_extLoad callback');
 			ACPageReady();
+			
 		});
+		
+		
 		
 	};
 	
 //	Other
-	(function($){/*! AW ImgAfterLoad v5.4
+	(function($){/*! AW ImgAfterLoad v5.5
 		
-		Last upadate _2019_04_07_12_37_47_57
+		Last upadate _2019_10_16_01_08_32_38
 		(c) Alvio Wayne
 		The MIT License (MIT)
 		
@@ -2184,16 +3559,36 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 					$('html').addClass('imgAfterLoad');
 					
 					$.onCreate('img', function(elements) {
+						
 //						console.log(elements);
-						$ImgAfterLoad('upadate');
+						
+						$(elements).each(function(index, item) {
+							
+							if ($(item).hasClass('imgAfterLoad_off')) {
+								$(item).addClass("visible");
+								return;
+							};
+							
+ 							$(item).attr({
+								"data-src" : $(item).attr('src'),
+							})
+							.attr({
+								"src" : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
+							});
+							
+						});
+						
+						$ImgAfterLoad('update');
+						
 					},true);
 					
+//					$ImgAfterLoad('update');
+					
 				break
-				case 'upadate':
+				case 'update':
 					
-//					$('img[data-disable].visible').removeClass('visible');
-					
-					$('img[src]:not(.visible)').viewportChecker({
+//					$('img:not(.visible)').viewportChecker({
+					$('img').viewportChecker({
 						classToAdd: '', // Class to add to the elements when they are visible,
 						classToAddForFullView: '', // Class to add when an item is completely visible in the viewport
 						classToRemove: '', // Class to remove before adding 'classToAdd' to the elements
@@ -2204,31 +3599,15 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 							
 //							console.log(elem);
 							
- 							if (!$(elem).hasAttr('data-disable')) {
-								
-								$(elem).attr({
-									"data-disable" : $(elem).attr('src'),
-								}).removeAttr('src');
-								$(elem).attr({
-									"src" : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
-								});
-								
-							}
+ 							$(elem).attr({
+								"src" : $(elem).attr('data-src'),
+							});
 							
-							var dsrc = $(elem).attr("data-disable");
-							$('<img/>').attr('src', dsrc).on('load',function() {
-								
-								$(this).remove();
-		//						$(elem).addClass("load");
-								
-								$(elem).removeAttr('src');
-								$(elem).attr({
-									"src" : $(elem).attr('data-disable'),
-								}).removeAttr('data-disable');
+							$(elem).on('load', function() {
 								
 								setTimeout(function() {
 									$(elem).addClass("visible");
-		//							$(elem).removeClass("load");
+//									$(this).addClass("visible");
 								}, 150);
 								
 							});
@@ -2239,51 +3618,6 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 					
 				break
 				default:
-					
-					$('img[src]').each(function() {
-			//			$('#AWITCoreH').append('img{transform: scale(0.9);opacity:0;}');
-						
-						var imgEl = $(this);
-						$(imgEl).attr({
-							"data-disable" : $(imgEl).attr('src'),
-						}).removeAttr('src');
-						$(imgEl).attr({
-							"src" : 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==',
-						});
-						
-					});
-	//				$(window).on('load', function(){ $('img').viewportChecker({
-					$(document).on("pageReady", function(e) { $('img').viewportChecker({
-						classToAdd: '', // Class to add to the elements when they are visible,
-						classToAddForFullView: '', // Class to add when an item is completely visible in the viewport
-						classToRemove: '', // Class to remove before adding 'classToAdd' to the elements
-						removeClassAfterAnimation: false, // Remove added classes after animation has finished
-						invertBottomOffset: false, // Add the offset as a negative number to the element's bottom
-						repeat: false, // Add the possibility to remove the class if the elements are not visible
-						callbackFunction: function(elem, action){
-						
-						var dsrc = $(elem).attr("data-disable");
-						$('<img/>').attr('src', dsrc).on('load',function() {
-							
-							$(this).remove();
-	//						$(elem).addClass("load");
-							
-							$(elem).removeAttr('src');
-							$(elem).attr({
-								"src" : $(elem).attr('data-disable'),
-							}).removeAttr('data-disable');
-							
-							setTimeout(function() {
-								$(elem).addClass("visible");
-	//							$(elem).removeClass("load");
-							}, 150);
-							
-						});
-							
-						}, // Callback to do after a class was added to an element. Action will return "add" or "remove", depending if the class was added or removed
-						offset: 0, // The offset of the elements (let them appear earlier or later). This can also be percentage based by adding a '%' at the end
-					}); });
-					
 				break;
 			};
 		};
@@ -2312,7 +3646,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 				var wownewDelay = elem.attr("data-wownew-delay");
 				
 				if ($(elem).hasClass( "visible" )) {
-					elem.css('animation-delay',wownewDelay);
+					elem.css('animation-delay', wownewDelay);
 				} else {
 					$(elem).addClass('unvisible');
 				}
@@ -2324,7 +3658,7 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	};
 	function FontLoad(property) {/*! AW Font load v5.0
 		
-		Last upadate _2019_01_15_17_28_30_52
+		Last upadate _2019_08_28_22_23_41_37
 		(c) Alvio Wayne
 		The MIT License (MIT)
 		
@@ -2349,10 +3683,72 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 				*/});
 				
 				if (!AC_self.UP) {
-					var url = AC_path+'styles/base/fonts/fontawesome-free-5.4.1-web/css/all.min.css';
+					
+ 					var url = AC_path+'styles/base/fonts/fontawesome-free-5.4.1-web/css/all.min.css';
 					$('head').append(
 						'<link rel="StyleSheet" href="'+url+'" type="text/css" media="screen">'
 					);
+					
+/* 					var fn = 'Font Awesome 5 Free';
+					
+					var iserror = 0;
+					
+					var url = AC_path+'styles/base/fonts/fontawesome-free-5.4.1-web/css/all.min.css';
+					head = document.getElementsByTagName('head')[0];
+					link = document.createElement('link');
+					link.type = "text/css";
+					link.rel = "stylesheet"
+					link.href = url;
+					link.onerror = (error) => {
+//						alert("Error"); // you wil get to know error here
+//						console.log('ACPageReady fontSpy failure');
+						iserror = 1;
+						ACPageReady();
+					}
+					head.appendChild(link);
+					
+					if (link.addEventListener) {
+						link.addEventListener('load', function() {
+							console.log('Font "'+ fn +'" ready');
+							
+							var FLCount = 0;
+							var FLCountFShow = 3;
+							
+							function FontLoadFontSpy() {
+							fontSpy(fn, {
+								success: function() {
+									
+									console.log('Font "'+ fn +'" has been loaded');
+//									$('html').removeClass('FontLoadWhait');
+//									$('#FontLoadWhait').remove();
+//									console.log('ACPageReady fontSpy');
+//									ACPageReady();
+//									if (AC_self.fl_pageShowWhait) { ACPageReady(); }
+									if (iserror == 0) { ACPageReady(); }
+								},
+								failure: function() {
+									
+ 									FLCount++
+//									console.log(FLCount);
+//									console.log(FLCountFShow);
+									if (FLCount == FLCountFShow) {
+										console.log('ACPageReady fontSpy failure');
+										ACPageReady();
+										return;
+									}
+									
+									console.log('failure');
+									FontLoadFontSpy();
+									
+								}
+							});
+							}
+							FontLoadFontSpy();
+							
+						}, false);
+					}
+					 */
+					
 				}
 				
 			} break
@@ -2383,8 +3779,8 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 						link.addEventListener('load', function() {
 							console.log('Font "'+ fn +'" ready');
 							
-//							var FLCount = 0;
-//							var FLCountFShow = 5;
+							var FLCount = 0;
+							var FLCountFShow = 3;
 							
 							function FontLoadFontSpy() {
 							fontSpy(fn, {
@@ -2400,12 +3796,14 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 								},
 								failure: function() {
 									
-/* 									FLCount++
-									console.log(FLCount);
+ 									FLCount++
+//									console.log(FLCount);
+//									console.log(FLCountFShow);
 									if (FLCount == FLCountFShow) {
 										console.log('ACPageReady fontSpy failure');
 										ACPageReady();
-									} */
+										return;
+									}
 									
 									console.log('failure');
 									FontLoadFontSpy();
@@ -2450,6 +3848,386 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		);
 	}
 	
+	{ ACInfo(function() {/*! BeefUp v1.1.7 - A jQuery Accordion Plugin
+		
+		Copyright 2016 Sascha Künstler http://www.schaschaweb.de/
+		https://github.com/Schascha/BeefUp
+		Alvio Wayne modyfication _2019_08_24_20_06_01_63
+		
+	*/});
+	
+(function($) {
+	
+    'use strict';
+
+    // BeefUp object
+    var beefup = {};
+
+    // Defaults
+    beefup.defaults = {
+        trigger: '.beefup__head',       // String: Name of the trigger element
+        content: '.beefup__body',       // String: Name of the collapsible content
+        openClass: 'beefup__open',           // String: Name of the class which shows if a accordion is triggered or not
+        stayOpenClass: 'beefup__stayopen',
+        openSingleClass: 'beefup__opensingle',
+        selfBlockClass: 'beefup__selfblock',
+        animation: 'slide',             // String: Set animation type to "slide", "fade" or leave empty ""
+        openSpeed: 200,                 // Integer: Set the speed of the open animation
+        closeSpeed: 200,                // Integer: Set the speed of the close animation
+        scroll: false,                  // Boolean: Scroll to accordion
+        scrollSpeed: 400,               // Integer: Set the speed of the scroll feature
+        scrollOffset: 0,                // Integer: Additional offset to accordion position
+        openSingle: false,              // Boolean: Open just one accordion at once
+        stayOpen: null,                 // Mixed: Leave one item open, accepts null, integer or string
+        selfClose: false,               // Boolean: Close on click outside
+        selfBlock: false,               // Boolean: Block close event on click
+        hash: true,                     // Boolean: Open accordion with id on hash change
+        breakpoints: null,              // Mixed: Null or array of objects
+        onInit: function() {},          // Callback: Fires after the accordions initially setup
+        onOpen: function() {},          // Callback: Fires after accordion opens content
+        onClose: function() {},         // Callback: Fires after accordion close content
+        onScroll: function() {}         // Callback: Fires after scroll animation
+    };
+
+    // Private methods
+    beefup.methods = {
+
+        /**
+         * Extend options
+         *
+         * @param {jQuery} $el
+         */
+        getVars: function($el) {
+            var vars = $.extend(true, {}, $el.data('beefup'), $el.data('beefup-options'));
+
+            if (vars.breakpoints) {
+                vars = beefup.methods.getResponsiveVars(vars);
+            }
+
+            return vars;
+        },
+
+        /**
+         * Overwrite options depending on breakpoints
+         *
+         * @param {object} vars
+         * @returns {*}
+         */
+        getResponsiveVars: function(vars) {
+            var windowWidth = window.innerWidth || $(window).width();
+
+            // Sort
+            vars.breakpoints.sort(function(a, b) {
+                return ((a.breakpoint < b.breakpoint) ? -1 : ((a.breakpoint > b.breakpoint) ? 1 : 0));
+            });
+
+            $.each(vars.breakpoints, function(index, value) {
+                if (windowWidth > value.breakpoint) {
+                    vars = $.extend({}, vars, value.settings);
+                }
+            });
+
+            return vars;
+        },
+
+        /**
+         * Animation types
+         *
+         * @param {string} type
+         * @param {jQuery} $el
+         * @param {number} speed
+         * @param {function} callback
+         */
+        animation: function(type, $el, speed, callback) {
+            switch (type) {
+                case 'slideDown':
+                    $el.slideDown(speed, callback);
+                    break;
+                case 'slideUp':
+                    $el.slideUp(speed, callback);
+                    break;
+                case 'fadeIn':
+                    $el.fadeIn(speed, callback);
+                    break;
+                case 'fadeOut':
+                    $el.fadeOut(speed, callback);
+                    break;
+                case 'show':
+                    $el.show(speed, callback);
+                    break;
+                case 'hide':
+                    $el.hide(speed, callback);
+                    break;
+            }
+        },
+
+        /**
+         * Get stayOpen element
+         *
+         * @param {jQuery} $obj
+         * @param {number|string} value
+         * @returns {*}
+         */
+        getStayOpen: function($obj, value) {
+            var $el;
+
+            if (typeof value === 'number') {
+                $el = $obj.eq(value);
+            } else if (typeof value === 'string') {
+                $el = $obj.filter(value);
+            }
+
+            return $el;
+        },
+
+        /**
+         * Add self close event
+         *
+         * @param {jQuery} $obj
+         * @param {object} vars
+         */
+        selfClose: function($obj, vars) {
+            $(document).on('click', function(e) {
+                var $el;
+
+                if (!$(e.target).closest($obj).length) {
+
+                    // Find open items
+                    $el = $obj.filter('.' + vars.openClass);
+					
+					// AW
+					$el = $el.not($('.stayOpen'));
+					
+                    // Exclude stayOpen item
+                    if (vars.stayOpen !== null) {
+                        $el = $el.not(beefup.methods.getStayOpen($obj, vars.stayOpen));
+                    }
+
+                    // Close remaining items
+                    if ($el.length) {
+                        $obj.close($el);
+                    }
+					
+					// AW
+					$('.stayOpen').addClass(vars.openClass);
+					$('.stayOpen').find('.beefup__body').css('display','');
+//					$beefup.open($('.stayOpen'));
+					
+                }
+            });
+        },
+
+        /**
+         * Add hash change event
+         *
+         * @param {jQuery} $obj
+         * @param {object} vars
+         */
+        hash: function($obj, vars) {
+            var hashChange = function() {
+                var $el = $obj.filter(window.location.hash);
+
+                if ($el.length && !$el.hasClass(vars.openClass)) {
+                    $obj.click($el);
+                }
+            };
+
+            hashChange();
+            $(window).on('hashchange', hashChange);
+        }
+    };
+
+    $.fn.beefup = function(options) {
+        var $obj = this;
+
+        /**
+         * Open
+         *
+         * @param {jQuery} [$el]
+         * @param {function} [callback]
+         * @returns {jQuery}
+         */
+        this.open = function($el, callback) {
+            if (!$el || !$el.length) {
+                $el = $obj;
+            }
+
+            $el.each(function() {
+                var $this = $(this),
+                    vars = beefup.methods.getVars($this),
+                    $content = $this.find(vars.content + ':first'),
+                    animation = (vars.animation === 'slide') ? 'slideDown' :
+                        (vars.animation === 'fade') ? 'fadeIn' : 'show';
+						
+				// AW
+				$this.addClass(vars.openClass);
+				
+                // Animation
+                beefup.methods.animation(animation, $content, vars.openSpeed, function() {
+//					$this.addClass(vars.openClass);
+                    $content.css('overflow', '');
+
+                    // Callbacks
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+
+                    if (vars.onOpen && typeof vars.onOpen === 'function') {
+                        vars.onOpen($this);
+                    }
+                });
+            });
+
+            return $obj;
+        };
+
+        /**
+         * Close
+         *
+         * @param {jQuery} [$el]
+         * @param {function} [callback]
+         * @returns {jQuery}
+         */
+        this.close = function($el, callback) {
+            if (!$el || !$el.length) {
+                $el = $obj;
+            }
+
+            $el.each(function() {
+                var $this = $(this),
+                    vars = beefup.methods.getVars($this),
+                    $content = $this.find(vars.content + ':first'),
+                    animation = (vars.animation === 'slide') ? 'slideUp' :
+                        (vars.animation === 'fade') ? 'fadeOut' : 'hide';
+
+				// AW
+				$this.removeClass(vars.openClass);
+				
+                // Animation
+                beefup.methods.animation(animation, $content, vars.closeSpeed, function() {
+//					$this.removeClass(vars.openClass);
+                    $content.css('overflow', '');
+
+                    // Callbacks
+                    if (callback && typeof callback === 'function') {
+                        callback();
+                    }
+
+                    if (vars.onClose && typeof vars.onClose === 'function') {
+                        vars.onClose($this);
+                    }
+                });
+            });
+
+            return $obj;
+        };
+
+        /**
+         * Scroll
+         *
+         * @param {jQuery} $el
+         * @returns {jQuery}
+         */
+        this.scroll = function($el) {
+            var vars = beefup.methods.getVars($el);
+
+            $('html, body').animate(
+                {scrollTop: $el.offset().top + vars.scrollOffset},
+                vars.scrollSpeed
+            ).promise().done(function() {
+                if (vars.onScroll && typeof vars.onScroll === 'function') {
+                    vars.onScroll($el);
+                }
+            });
+
+            return $obj;
+        };
+
+        /**
+         * Click
+         *
+         * @param {jQuery} $el
+         * @returns {jQuery}
+         */
+        this.click = function($el) {
+            var vars = beefup.methods.getVars($el);
+
+            if (vars.openSingle || $el.hasClass(vars.openSingleClass)) {
+                if (vars.stayOpen !== null) {
+                    $obj.close($obj.not($el).not(beefup.methods.getStayOpen($obj, vars.stayOpen)));
+                } else {
+                    $obj.close($obj.not($el));
+                }
+            }
+
+            if (!$el.hasClass(vars.openClass)) {
+                $obj.open($el, function() {
+                    if (vars.scroll) {
+                        $obj.scroll($el);
+                    }
+                });
+            } else {
+                if (!vars.selfBlock || !$el.hasClass(vars.selfBlockClass)) {
+                    $obj.close($el);
+                }
+            }
+
+            return $obj;
+        };
+
+        return this.each(function(index, el) {
+            var $el = $(el),
+                vars = $.extend({}, beefup.defaults, options, $el.data('beefup-options'));
+
+            if ($el.data('beefup')) {
+                return;
+            }
+
+            $el.data('beefup', vars);
+
+            if (vars.breakpoints) {
+                vars = beefup.methods.getResponsiveVars(vars);
+            }
+
+            if (vars.stayOpen !== null && $el.is(beefup.methods.getStayOpen($obj, vars.stayOpen))) {
+                $el.addClass(vars.openClass);
+            }
+            else if ($el.hasClass(vars.stayOpenClass)) {
+                $el.addClass(vars.openClass);
+            }
+
+            $el.not('.' + vars.openClass).find(vars.content + ':first').hide();
+
+            // Callback
+            if (vars.onInit && typeof vars.onInit === 'function') {
+                vars.onInit($el);
+            }
+
+            // Click event
+            $el.on('click', vars.trigger + ':first', function(e) {
+                e.preventDefault();
+                $obj.click($el);
+            });
+
+            // Trigger only once
+            if (index === 0) {
+
+                // Hash
+                if (vars.hash) {
+                    beefup.methods.hash($obj, vars);
+                }
+
+                // Self close
+                if (vars.selfClose) {
+                    beefup.methods.selfClose($obj, vars);
+                }
+            }
+        });
+    };
+
+})(jQuery);
+	
+	}
 	
 	
 	
@@ -2513,21 +4291,25 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 	
 	
 	
+	
+	
+	
+	
 //!	INIT
-	{ // instant before $(function()
+	{ // instant before $(function() (DOM ready)
 		
 		if (!ifDevice('mobile')) { AWITCoreInfo_logPrint(); }
 		if (AC_self.ImgAfterLoad) { $ImgAfterLoad('init'); }
-		if (AC_self.FullPageBackground) { backLow(); }
-
-	}
-	$(function() { // DOM ready
 		
-		AWITCoreTags();
+	}
+	
+	function INIT() {
+		
 		DeviceBlock();
 		
-		if (AC_self.ImgAfterLoad) { $ImgAfterLoad(); }
 		$AWIT_NAV();
+		$AWIT_MODAL();
+		$AW_animList();
 		if (ifDevice('desktop') || ifDevice('tablet')) {
 			
 			if (AC_self.WowNew) { WowNew(); }
@@ -2535,40 +4317,83 @@ if (jQuery) { ACInfo(function() {/*! jQuery & Plugins
 		}
 		FontLoad();
 		if (AC_self.FontAwesome) { FontLoad('FontAwesome'); }
-/* 		if (!ifDevice('mobile')) {
-			if (AC_scrollbar.ScrollTop) { scrollTop(); };
-		}; */
 		if (AC_self.FullPageBackground) {
 			backBaseStyle();
 			backHD();
 			if (AC_self.Back_Overlay) { backOverlay(); }
 		}
-		ScrolllToID(); // passive
 		if (AC_self.ShowFPS) { ShowFPS(); };
 		if (AC_self.BodyAbsoluteCenter) { BodyAbsoluteCenter(); };
 		
 		BaseCJLoadV(); // always load last at the end
 		
-	});
+		
+		
+	}
+	if (AC_self.waitDOM) {
+		
+		$(function() {
+			
+			INIT();
+			
+		});
+		
+	} else {
+		
+		INIT();
+		
+	}
+	
 	$(document).on('pageReady', function(e) {
 		
-		$.onCreate('input.materialInput', function(elements) {
+//		console.log('pageReady');
+		
+		$.onCreate('.beefup', function(elements) {
+			
 //			console.log(elements);
-			$('input.materialInput').materialInput();
+			$(elements).beefup({
+	//			openSingle: true,
+	//			selfClose: true,
+			});
+			
 		},true);
 		
+		$('input.numberInput').numberInput();
+		$.onCreate('input.numberInput', function(elements) {
+	//		console.log(elements);
+			$('input.numberInput').numberInput();
+		},true);
+		
+		$('input.materialInput, textarea.materialInput').materialInput();
+		$.onCreate('input.materialInput, textarea.materialInput', function(elements) {
+	//		console.log(elements);
+			$('input.materialInput, textarea.materialInput').materialInput();
+	//		$(elements).numberInput('update_wh');
+		},true);
+		
+		$('textarea.textareaAutoSize').textareaAutoSize();
+		$.onCreate('textarea.textareaAutoSize', function(elements) {
+			$('textarea.textareaAutoSize').textareaAutoSize();
+		},true);
+		
+		// buttonConfirm
+		var buttonConfirm = '.buttonConfirm';
+		$(buttonConfirm).AW_buttonConfirm('prepare');
+		$.onCreate(buttonConfirm, function(elements) {
+			$(elements).AW_buttonConfirm('prepare');
+		},true);
+		$(document).AW_buttonConfirm('events');
+		
 	});
+	
+	
+	
+	
+	
 	
 	
 	
 }})(jQuery);
-
-
-
-
-
-
-
 
 
 

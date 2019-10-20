@@ -1,4 +1,4 @@
-<?php // _2019_04_17_21_21_21_43
+<?php // _2019_09_12_17_24_55_22
 	
 	
 	
@@ -1195,6 +1195,8 @@
 	// BUILD
 	function BUILD($type, $data) {
 		
+		global $Minify;
+		
 		if ($type == 'js') {
 			$coreFile_prebuild_type = coreFile_prebuild_js;
 			$coreFile_build_type = coreFile_build_js;
@@ -1325,12 +1327,23 @@
 			
 			// minify
 			if ($type == 'js') {
-				$jSqueeze = (new JSqueeze());
-				$jsonContent = $jSqueeze->squeeze($jsonContent, true, false);
+				
+				if ($Minify) {
+					$jSqueeze = (new JSqueeze());
+					$jsonContent = $jSqueeze->squeeze($jsonContent, true, true, false);
+				}
+				
+//				$jSqueeze = (new JSqueeze());
+//				$jsonContent = $jSqueeze->squeeze($jsonContent, true, true, false);
 				cleanBuildJsFolder();
 			}
 			else if ($type == 'css') {
-				$jsonContent = cssMinify($jsonContent);
+				
+				if ($Minify) {
+					$jsonContent = cssMinify($jsonContent);
+				}
+				
+//				$jsonContent = cssMinify($jsonContent);
 				cleanBuildCssFolder();
 			}
 			
@@ -1357,7 +1370,7 @@
 	$doneFilesPath = '../CJBuild/';
 	$done = "
 		<script></script>
-		<script type='text/javascript' charset='windows-1252' src='".$tpl_path.'AWITCore/AWIT.Core6.src.js'."'></script>
+		<script type='text/javascript' src='".$tpl_path.'AWITCore/AWIT.Core6.src.js'."'></script>
 		<script id='AWITCoreConfig'>
 		"."$"."AWITCore({
 			
